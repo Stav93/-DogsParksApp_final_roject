@@ -59,13 +59,8 @@ const UsersContextProvider = ({children}) => {
           clickLogInHandler("/profile")
         }}
         catch (error) {
-<<<<<<< HEAD
           //  setMessage(true);
            console.log("Error: " + error)
-=======
-           setMessage(true);
-            console.log("Error: " + error)
->>>>>>> 0b6ac4d4907d78e3a4e92aa3a00d4c11b3355104
          } 
      } 
     ;
