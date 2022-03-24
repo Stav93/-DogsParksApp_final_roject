@@ -1,0 +1,25 @@
+.login {
+  width: 90%;
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.actions {
+  text-align: center;
+}
+
+.loginMessage {
+  margin-top: 10px;
+  color: red;
+}
+
+a {
+  color: #741188;
+  /* font-weight: bold; */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
