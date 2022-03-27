@@ -1,12 +1,23 @@
 .login {
+  width: 100%;
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 5px 0;
+}
+/* .login {
   width: 90%;
   max-width: 40rem;
   margin: 2rem auto;
   padding: 2rem;
-}
+} */
 
 .actions {
   text-align: center;
+  margin-top: 50px;
+}
+
+.actions button {
+  margin-bottom: 10px;
 }
 
 .loginMessage {

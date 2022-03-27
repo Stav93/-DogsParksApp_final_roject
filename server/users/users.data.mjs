@@ -25,8 +25,8 @@ export async function getUserByNameAndEmail(email, password) {
 
 export async function addUser(newUser) {
     const usersColection = await getUsersColletion();
-    const user = usersColection.insertOne(newUser);
-    return user;
+    return usersColection.insertOne(newUser);
+    
 }
 // export async function addUser(newUser) {
 //     const usersColection = await getUsersColletion();

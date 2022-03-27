@@ -1,5 +1,11 @@
+h2 {
+  font-weight: 400;
+  margin-top: 30px;
+}
+
 .control {
-  margin: 1rem 0;
+  /* margin: 1rem 0; */
+  margin-bottom: 1rem;
   display: flex;
   align-items: stretch;
   flex-direction: column;
@@ -8,22 +14,30 @@
 .control label,
 .control input {
   display: block;
+  margin-top: 5px;
 }
 
 .control label {
   font-weight: bold;
   flex: 1;
   color: #4f005f;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .control input {
   flex: 3;
   font: inherit;
-  padding: 0.35rem 0.35rem;
+  padding: 0.25rem;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
+/* .control input {
+  flex: 3;
+  font: inherit;
+  padding: 0.35rem 0.35rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+} */
 
 .control input:focus {
   outline: none;

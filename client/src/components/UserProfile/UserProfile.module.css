@@ -34,7 +34,9 @@
   color: red;
 }
 
-
+@media (max-width: 768px) {
+  
+}
 
 @media (max-width: 550px) {
   .container h1 {

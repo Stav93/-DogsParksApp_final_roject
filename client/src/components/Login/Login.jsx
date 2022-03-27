@@ -102,8 +102,9 @@ function Login()  {
     // clickLogInHandler(`/profile/${usersCtx.user.name}`);
   }
   return (
-    <>
-    <form onSubmit={submitHandler}>
+    <div>
+     <h2>Log In</h2>
+    <form onSubmit={submitHandler} className={classes.login}>
      <Input
       id="email"
       label="Email" 
@@ -134,7 +135,7 @@ function Login()  {
       </div>
       </div>
     </form>
-    </>
+    </div>
   )
 }
 
