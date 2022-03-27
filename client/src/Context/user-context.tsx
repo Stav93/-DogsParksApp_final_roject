@@ -1,12 +1,15 @@
 import React, { useState, useContext, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 
+interface IUsersContext {
+  isLoggedIn: boolean,
+}
 
-const UsersContext = React.createContext({});
+const UsersContext = React.createContext<IUsersContext>({isLoggedIn: false});
 
 const UsersContextProvider = ({children}) => {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [message, setMessage] = useState(false)
   const [user, setUser] = useState({});
   const clickLogInHandler = useNavigate();
