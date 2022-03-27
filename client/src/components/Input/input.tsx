@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import classes from "./Input.module.css"
 
 const Input = ({isValid, id, label, type, value, onChange, onBlur, placeholder}) => {
