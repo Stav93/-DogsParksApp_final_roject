@@ -21,6 +21,7 @@ function App() {
         <Route path="/profile/:userName" element={usersCtx.isLoggedIn ? <UserProfile/> : <Login/>}>
             <Route path="myDogs" element={<DogsList/>}></Route>
             <Route path="myParks" element={<ParksList/>}></Route>
+            <Route path="allParks" element={<ParksList/>}></Route>
         </Route>
         <Route path="/sign-up" element={usersCtx.isLoggedIn ? <UserProfile/> : <SignUp/>} />
         {/* <Route path="/*" >Page Not Fount</Route> */}

@@ -29,12 +29,12 @@ export const UsersRouter = Router();
 
 //  להביא יוזר עם האימייל והסיסמא ששמנו בלוג אין post 
 // res.end מחזירה את היוזר לקליינט
-UsersRouter.post('/', async (req, res) => {
+UsersRouter.post('/login', async (req, res) => {
   res.send(await getUserByNameAndEmail(req.body.email, req.body.password));
 });
 
 // post - אובייקט מהקליינט לסרבר שמוסיף את היוזר ומחזיר אותו לקליינט
-UsersRouter.post('/', async (req, res) => {
+UsersRouter.post('/signup', async (req, res) => {
   res.send(await addUser(req.body));
 });
 

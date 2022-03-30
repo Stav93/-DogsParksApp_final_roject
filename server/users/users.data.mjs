@@ -19,14 +19,13 @@ export async function getUserById(id) {
 export async function getUserByNameAndEmail(email, password) {
     const usersColection = await getUsersColletion();
     const user = usersColection.findOne({email, password})
-    console.log(user)
     return user;
 }
 
 export async function addUser(newUser) {
     const usersColection = await getUsersColletion();
-    return usersColection.insertOne(newUser);
-    
+    const user = usersColection.insertOne(newUser);
+    return newUser;
 }
 // export async function addUser(newUser) {
 //     const usersColection = await getUsersColletion();

@@ -32,7 +32,7 @@ function reducerFunc(prevState, action) {
     case 'NAME_BLUR':
       return {
         ...prevState,
-        nameState: {value: prevState.emailState.value, isValid: prevState.emailState.value.trim().length >= 2 }
+        nameState: {value: prevState.nameState.value, isValid: prevState.nameState.value.trim().length >= 2 }
       };
     case 'EMAIL_BLUR':
       return {
@@ -146,7 +146,7 @@ function SignUp()  {
   const submitHandler = async (event) => {
     event.preventDefault();
     usersCtx.onSignUp(state.nameState.value, state.emailState.value, state.cityState.value, state.passwordState.value);
-    clickSignUpHandler("/profile");
+    // clickSignUpHandler("/profile");
   }
   return (
     <>

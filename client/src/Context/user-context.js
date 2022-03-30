@@ -16,7 +16,7 @@ const UsersContextProvider = ({children}) => {
     // לשלוח את השם והסיסמא לסרבר ולבדוק אם יש יוזר עם הסיסמא והמייל
     // אם כן הוא מחזיר אותו
     try {
-      const respone = await fetch("/api/users/",  
+      const respone = await fetch("/api/users/login",  
         {
           method: 'POST',
           headers: {
@@ -41,7 +41,7 @@ const UsersContextProvider = ({children}) => {
 
     const signUpHandler = async (name, email, city, password) => {
       try {
-        const respone = await fetch("/api/users/",  
+        const respone = await fetch("/api/users/signup",  
           {
             method: 'POST',
             headers: {
@@ -56,7 +56,8 @@ const UsersContextProvider = ({children}) => {
           localStorage.setItem("isLoggedIn","1");
           setIsLoggedIn(true);
           setUser(userData);
-          clickLogInHandler("/profile")
+          console.log(userData);
+          clickLogInHandler(`/profile/${userData.name}`);
         }}
         catch (error) {
           //  setMessage(true);

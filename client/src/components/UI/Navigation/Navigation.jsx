@@ -10,15 +10,13 @@ function Navigation() {
       <ul>
         {isLoggedIn && (
           <li>
-            {/* <a href="/">My Profile</a> */}
             {/* add style to active page */}
             <Link to={`/profile/${user.name}`}>My Profile</Link>
           </li>
         )}
         {isLoggedIn && (
           <li>
-            <a href="/">Parks</a>
-            {/* <Link to={"/parks"}>My Profile</Link> */}
+            <Link to={`/profile/${user.name}/allParks`}>Parks</Link>
           </li>
         )}
         {isLoggedIn && (

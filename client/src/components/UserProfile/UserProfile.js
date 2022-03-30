@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useUsersContext } from "../../Context/user-context"
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, Outlet } from "react-router-dom";
 import classes from "./UserProfile.module.css"
+import DogsList from '../DogsList/DogsList';
 
 function UserProfile() {
   const usersCtx = useUsersContext();
@@ -26,7 +27,8 @@ function UserProfile() {
       <div className={classes.links}>
         {/* <button className={activeDogs ? classes.btnActive : ""} onClick={dogsClick}>My Dogs</button>
         <button className={activeParks ? classes.btnActive : ""} onClick={parksClick}>My Parks</button> */}
-        <Link to={"myDogs"}>My Dogs</Link>
+         <Outlet/>
+        <Link to={"myDogs"} >My Dogs</Link>
         <Link to={"myParks"}>My Parks</Link>
       </div>
     </div>
