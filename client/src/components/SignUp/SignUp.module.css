@@ -1,8 +1,14 @@
 .login {
   width: 90%;
   max-width: 40rem;
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 2rem;
+}
+
+h2 {
+  font-weight: 400;
+  margin-top: 70px;
+  margin-bottom: 20px;
 }
 
 .actions {

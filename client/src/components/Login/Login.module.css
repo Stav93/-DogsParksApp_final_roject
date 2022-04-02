@@ -1,8 +1,13 @@
 .login {
   width: 100%;
   max-width: 40rem;
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 5px 0;
+}
+
+h2 {
+  font-weight: 400;
+  margin-top: 70px;
 }
 /* .login {
   width: 90%;
