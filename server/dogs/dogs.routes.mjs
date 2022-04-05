@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { addDog, editDog, getAllDogs, getDogById, removeDog } from './dogs.data.mjs';
+import { addDog, editDog, getAllDogs, getDogById, removeDog, getDogsByUserId } from './dogs.data.mjs';
 // import { getProductBySellerId } from '../products/products.data.mjs';
 
 export const DogsRouter = Router();
@@ -22,12 +22,12 @@ export const DogsRouter = Router();
    res.send(await getDogById(req.params.id));
  });
 
- //READ
- DogsRouter.get('/:id/products', async (req, res) => {
-    res.send(await getProductBySellerId(req.params.id));
+ //READ - Get Dogs By User ID
+ DogsRouter.get('/users/:id', async (req, res) => {
+    res.send(await getDogsByUserId(req.params.id));
  });
  
-//  POST - add user
+//  POST - add dog
  DogsRouter.post('/', async (req, res) => {
    res.send(await addDog(req.body));
  });
