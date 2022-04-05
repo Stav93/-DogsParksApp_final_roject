@@ -1,0 +1,11 @@
+.form {
+  width: 100%;
+  max-width: 40rem;
+  margin: 1rem auto;
+  padding: 5px 0;
+}
+
+.message {
+  margin-top: 10px;
+  color: red;
+}
