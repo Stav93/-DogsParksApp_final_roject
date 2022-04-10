@@ -51,7 +51,9 @@ function reducerFunc(prevState, action) {
       };
       default:
         return {
+          nameState: { value: "", isValid: false },
           emailState: { value: "", isValid: false },
+          cityState: {value: "", isValid: false},
           passwordState: {value: "", isValid: false}
         }
   }

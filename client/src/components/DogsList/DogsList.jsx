@@ -23,6 +23,9 @@ function DogsList() {
     setShowForm(true);
   }
   
+  const hideFormFunc = () => {
+    setShowForm(false);
+  }
 
   return (
     <div className={classes.dogs}>
@@ -31,9 +34,9 @@ function DogsList() {
           <Dog key={dog._id} {...dog} />
         );
       })}
-      {/* <Button onClick={() => clickAddADogHandler("AddADog") } className="bgSmall">+Add A Dog</Button> */}
-      <Button onClick={AddADogHandler} className="bgSmall">+Add A Dog</Button>
-      {showForm && <DogForm/>}
+      <Button onClick={AddADogHandler} className={classes["bg-small"]} disableBtn={showForm}>+Add A Dog</Button>
+
+      {showForm && <DogForm hideForm={hideFormFunc}/>}
     </div>
   )
 }

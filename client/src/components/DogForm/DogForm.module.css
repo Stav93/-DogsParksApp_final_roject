@@ -5,6 +5,10 @@
   padding: 5px 0;
 }
 
+.btnDog {
+  background-color: red;
+}
+
 .message {
   margin-top: 10px;
   color: red;

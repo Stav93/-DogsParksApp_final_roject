@@ -10,10 +10,10 @@ function UserProfile() {
     <div className={classes.container}>
       <h1>{usersCtx.user.name}</h1>
       <div className={classes.links}>
-        <Outlet/>
         <Link to={"dogs"}>My Dogs</Link>
         <Link to={"parks"}>My Parks</Link>
       </div>
+      <Outlet/>
     </div>
   )
 }
