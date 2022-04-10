@@ -1,16 +1,30 @@
-import React, { useState, useContext, useMemo } from "react"
+import React, { useState, useContext, useMemo, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 
 const UsersContext = React.createContext({});
 
 const UsersContextProvider = ({children}) => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [message, setMessage] = useState(false)
   const [user, setUser] = useState({});
   const clickLogInHandler = useNavigate();
   const clickLogOutHandler = useNavigate();
+  const navigate = useNavigate();
+
+  // אם היוזר עשה לוג אין או סיין אפ אז להפוך לטרו
+useEffect(() => {
+  const storedUserLoggedInInformaition = localStorage.getItem('isLoggedIn');
+
+  if (storedUserLoggedInInformaition !== null) {
+    const userData = JSON.parse(storedUserLoggedInInformaition);
+    setUser(userData);
+    setIsLoggedIn(true);
+    navigate(`/profile/${userData.name}`);
+  } else {
+    navigate('/login');
+  }
+},[])
 
   const loginHandler = async (email, password) => {
     // לשלוח את השם והסיסמא לסרבר ולבדוק אם יש יוזר עם הסיסמא והמייל
@@ -28,7 +42,7 @@ const UsersContextProvider = ({children}) => {
 
       const userData = await respone.json();  
       if (userData !== undefined) {
-        localStorage.setItem("isLoggedIn","1");
+        localStorage.setItem("isLoggedIn",JSON.stringify(userData));
         setIsLoggedIn(true);
         setUser(userData);
         clickLogInHandler(`/profile/${userData.name}`);
@@ -53,7 +67,7 @@ const UsersContextProvider = ({children}) => {
   
         const userData = await respone.json();  
         if (userData !== undefined) {
-          localStorage.setItem("isLoggedIn","1");
+          localStorage.setItem("isLoggedIn",JSON.stringify(userData));
           setIsLoggedIn(true);
           setUser(userData);
           console.log(userData);
@@ -69,7 +83,7 @@ const UsersContextProvider = ({children}) => {
     const logoutHandler = () => {
       localStorage.removeItem('isLoggedIn');
       setIsLoggedIn(false);
-      clickLogOutHandler("/")
+      clickLogOutHandler("/login")
     }
 
     const value = useMemo(() => ({
@@ -101,12 +115,3 @@ const UsersContextProvider = ({children}) => {
 
 
 // ...........................................................................................
-
-// אם היוזר עשה לוג אין או סיין אפ אז להפוך לטרו
-// useEffect(() => {
-//   const storedUserLoggedInInformaition = localStorage.getItem('isLoggedIn')
-
-//   if (storedUserLoggedInInformaition === "1") {
-//     setIsLoggedIn(true);
-//   }
-// },[])

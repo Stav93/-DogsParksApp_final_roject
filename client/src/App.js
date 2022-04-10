@@ -18,7 +18,7 @@ function App() {
       {/* {!usersCtx.isLoggedIn && <Login/>}
       {usersCtx.isLoggedIn && <UserProfile/>} */}
       <Routes>
-        <Route path="/" element={<Login/>} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/profile/:userName" element={usersCtx.isLoggedIn ? <UserProfile/> : <Login/>}>
             <Route path="myDogs" element={<DogsList/>}>
               <Route path="AddADog" element={<DogForm/>}></Route>
