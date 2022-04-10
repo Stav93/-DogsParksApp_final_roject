@@ -20,12 +20,12 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login/>} />
         <Route path="/profile/:userName" element={usersCtx.isLoggedIn ? <UserProfile/> : <Login/>}>
-            <Route path="myDogs" element={<DogsList/>}>
-              <Route path="AddADog" element={<DogForm/>}></Route>
-            </Route>
-            <Route path="myParks" element={<ParksList/>}></Route>
-            <Route path="allParks" element={<ParksList/>}></Route>
+          <Route path="dogs" element={<DogsList/>}>
+            <Route path="AddADog" element={<DogForm/>}></Route>
+          </Route>
+          <Route path="parks" element={<ParksList/>}></Route>
         </Route>
+        <Route path="parks" element={<ParksList/>}></Route>
         <Route path="/sign-up" element={usersCtx.isLoggedIn ? <UserProfile/> : <SignUp/>} />
         {/* <Route path="/*" >Page Not Fount</Route> */}
       </Routes>

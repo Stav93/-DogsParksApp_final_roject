@@ -16,7 +16,7 @@ function Navigation() {
         )}
         {isLoggedIn && (
           <li>
-            <Link to={`/profile/${user.name}/allParks`}>Parks</Link>
+            <Link to={`/parks`}>Parks</Link>
           </li>
         )}
         {isLoggedIn && (

@@ -11,8 +11,8 @@ function UserProfile() {
       <h1>{usersCtx.user.name}</h1>
       <div className={classes.links}>
         <Outlet/>
-        <Link to={"myDogs"} >My Dogs</Link>
-        <Link to={"myParks"}>My Parks</Link>
+        <Link to={"dogs"}>My Dogs</Link>
+        <Link to={"parks"}>My Parks</Link>
       </div>
     </div>
   )
