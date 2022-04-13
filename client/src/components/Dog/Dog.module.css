@@ -1,0 +1,15 @@
+.dog {
+  width: 200%;
+  margin: 5px;
+}  
+
+.dog label {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #921677;
+  margin-bottom: 10px;
+}
+
+.dog h3 {
+  font-weight: 350;
+}

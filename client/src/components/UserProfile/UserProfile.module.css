@@ -18,15 +18,14 @@
 .links {
   display: flex;
   justify-content: center;
-  width: 100%;
 }
 
 .links a {
-  font-size: 1rem;
+  font-size: 1.1rem;
   border: 1px solid #4f005f;
   background: #5b016d;
   color: white;
-  padding: 0.15rem 2rem;
+  padding: 0.5rem 2.2rem;
   margin: 10px;
   cursor: pointer;
   border-radius: 10px;
@@ -49,14 +48,12 @@
   }
 
   .links {
-    justify-content: space-between;
+    
   }
 
   .links a {
-    font-size: 0.8rem;
-    padding: 0.4rem 0rem;
+    font-size: 1rem;
+    padding: 0.5em 0.75rem;
     margin: 10px;
-    justify-content: center;
-    width: 100vw;
   }
 }

@@ -161,7 +161,7 @@ function DogForm({hideForm}) {
       />
      <Input
         id="yearOfBirth"
-        label="yearOfBirth" 
+        label="Year Of Birth" 
         type="date" 
         // isValid={yearOfBirthIsValid} 
         value={yearOfBirthValue}
@@ -172,7 +172,7 @@ function DogForm({hideForm}) {
       {message && <p className={classes.message}>please enter your dog's name</p>}
       <Input
         id="weight"
-        label="weight" 
+        label="Weight" 
         type="number" 
         // isValid={weightIsValid} 
         value={weightValue}
@@ -182,7 +182,7 @@ function DogForm({hideForm}) {
       />
        <Input
         id="likes"
-        label="likes" 
+        label="Likes" 
         type="text" 
         // isValid={likesIsValid} 
         value={likesValue}
@@ -192,7 +192,7 @@ function DogForm({hideForm}) {
       />
        <Input
         id="dislike"
-        label="dislike" 
+        label="Dislike" 
         type="text" 
         // isValid={dislikeIsValid} 
         value={dislikeValue}

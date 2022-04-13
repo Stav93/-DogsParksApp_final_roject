@@ -35,7 +35,6 @@ function DogsList() {
         );
       })}
       <Button onClick={AddADogHandler} className={classes["bg-small"]} disableBtn={showForm}>+Add A Dog</Button>
-
       {showForm && <DogForm hideForm={hideFormFunc}/>}
     </div>
   )

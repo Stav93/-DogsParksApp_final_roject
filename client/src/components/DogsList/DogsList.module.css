@@ -1,6 +1,32 @@
+.dogs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top:20px;
+}
+
 .bg-small {
-  margin-top: 20px;
+  background: #921677;
+  border: 1px solid #921677;
+  margin-top: 25px;
   padding: 0.5rem 1.5rem;
   font-size: 0.9rem;
   border-radius: 7px;
+  width: 50vx;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.bg-small:hover {
+  background: #641653;
+  border: 1px solid #641653;
+}
+
+@media (max-width: 550px) {
+  .dogs {
+    width: 50%;
+  }
+  .bg-small {
+    width: 150%;
+  }
 }
