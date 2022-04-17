@@ -2,6 +2,7 @@ import React, {useState, useEffect, useReducer} from 'react'
 import Button from "../UI/Button/Button"
 import classes from "./DogForm.module.css"
 import Input from '../Input/input'
+import Modal from "../UI/Modal/Modal"
 
 function reducerFunc(prevState, action) {
   switch (action.type) {
@@ -147,8 +148,9 @@ function DogForm({hideForm}) {
   }
 
   return (
-    <div>
+    <Modal onClose={hideForm}>
       <form onSubmit={submitHandler} className={classes.form}>
+      <h1>Add A Dog</h1>
       <Input
         id="name"
         label="Name" 
@@ -207,7 +209,7 @@ function DogForm({hideForm}) {
        <a onClick={hideForm}>cancle</a>
       </div>
     </form>
-    </div>
+    </Modal>
   )
 }
 
