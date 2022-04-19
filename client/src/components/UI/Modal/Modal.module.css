@@ -24,9 +24,17 @@
 @media (min-width: 768px) {
   .modal {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     width: 30rem;
     left: calc(50% - 15rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .modal {
+    padding: 0;
+    top: 2vh;
+    bottom: 2vh;
   }
 }
 

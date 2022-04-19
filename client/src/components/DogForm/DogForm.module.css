@@ -5,10 +5,8 @@
 }
 
 .form {
-  width: 100%;
-  max-width: 40rem;
+  width: 33vw;
   margin: 1rem auto;
-  padding: 5px 0;
 }
 
 .form h1 {
@@ -26,11 +24,22 @@
   flex-wrap: nowrap;
 }
 
+.actions a {
+  margin-top: 5px;
+}
+
 .btnDog {
   background-color: #4f005f;
+  margin-top: 10px;
 }
 
 .message {
   margin-top: 10px;
   color: red;
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 80%;
+  }
 }

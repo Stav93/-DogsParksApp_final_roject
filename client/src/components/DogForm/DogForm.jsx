@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useReducer} from 'react'
+import { useUsersContext } from "../../Context/user-context"
 import Button from "../UI/Button/Button"
 import classes from "./DogForm.module.css"
 import Input from '../Input/input'
@@ -50,6 +51,7 @@ function reducerFunc(prevState, action) {
 function DogForm({hideForm}) {
   const [message, setMessage] = useState(false)
   const [formIsValid, setFormIsValid] = useState(false);
+  const usersCtx = useUsersContext();
 
   const [state, dispatchFunc] = useReducer(reducerFunc, {
     nameState: {
@@ -139,13 +141,32 @@ function DogForm({hideForm}) {
   //   dispatchFunc({type: 'PASSWORD_BLUR'});
   // };
 
+  const addDogFunc = async (name, year_of_birth, weight, likes, dislike, userId) => {
+    try {
+      const respone = await fetch("/api/dogs",  
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({name, year_of_birth, weight, likes, dislike, userId}),
+        }
+      );
+     }
+      catch (error) {
+         console.log("Error: " + error)
+       } 
+   } 
+  ;
+
   // submit - SignUp
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue )
-    // לשלוח את המידע מהטופס לדאטא בייס ולהוסיף את הכלב
-    // clickSignUpHandler("/profile");
+    hideForm();
+    addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, usersCtx.user._id);
   }
+
+
 
   return (
     <Modal onClose={hideForm}>

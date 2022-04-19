@@ -10,7 +10,6 @@ function DogsList() {
   const usersCtx = useUsersContext();
   const [dogs, setDogs] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const clickAddADogHandler = useNavigate()
 
   //להביא את הכלבים של היוזר
   useEffect(() => {
