@@ -28,6 +28,7 @@ export async function removeDog(id) {
 
 export async function editDog(id, dog) {
   const dogsColection = await getDogsColletion();
+  console.log(id, dog)
   return dogsColection.updateOne({_id: ObjectID(id)} , { $set: dog })
 }
 

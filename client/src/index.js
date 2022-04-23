@@ -4,13 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {UsersContextProvider} from "./Context/user-context"
+import {DogsContextProvider} from "./Context/dogs-context"
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <UsersContextProvider>
+      <DogsContextProvider>
         <App />
+      </DogsContextProvider>
       </UsersContextProvider>
     </BrowserRouter>
   </React.StrictMode>,

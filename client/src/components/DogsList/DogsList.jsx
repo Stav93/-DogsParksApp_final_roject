@@ -4,39 +4,38 @@ import Dog from "../Dog/Dog"
 import Button from "../UI/Button/Button"
 import classes from "./DogsList.module.css"
 import { useUsersContext } from "../../Context/user-context"
+import { useDogsContext } from "../../Context/dogs-context"
 import DogForm from '../DogForm/DogForm'
 
 function DogsList() {
   const usersCtx = useUsersContext();
-  const [dogs, setDogs] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const dogsCtx = useDogsContext();
+  // const [dogs, setDogs] = useState([]);
 
-  //להביא את הכלבים של היוזר
-  useEffect(() => {
-    fetch(`/api/dogs/users/${usersCtx.user._id}`)
-      .then(response => response.json())
-      .then(data => setDogs(data));
-  }, []);
+ // להביא את הכלבים של היוזר
+  // useEffect(() => {
+  //   fetch(`/api/dogs/users/${usersCtx.user._id}`)
+  //     .then(response => response.json())
+  //     .then(data => setDogs(data));
+  // }, []);
 
-  const AddADogHandler = () => {
-    setShowForm(true);
-  }
-  
-  const hideFormFunc = () => {
-    setShowForm(false);
-  }
+  // const editDogHandler = (e) => {
+  //   dogsCtx.EditDogFunc();
+  // }
 
   return (
     <div className={classes.dogs}>
-      {dogs.map(dog => {
+      {dogsCtx.dogs.map(dog => {
         return (
-          <Dog key={dog._id} {...dog} />
+          <Dog key={dog._id} {...dog}/>
+          // <Dog key={dog._id} {...dog} onEdit={editDogHandler}/>
         );
       })}
-      <Button onClick={AddADogHandler} className={classes["bg-small"]} disableBtn={showForm}>+Add A Dog</Button>
-      {showForm && <DogForm hideForm={hideFormFunc}/>}
+      <Button onClick={dogsCtx.AddADogHandler} className={classes["bg-small"]} disableBtn={dogsCtx.showForm}>+Add A Dog</Button>
+      {dogsCtx.showForm && <DogForm hideForm={dogsCtx.hideFormFunc}/>}
+      {console.log("showForm:" + dogsCtx.showForm)}
     </div>
   )
 }
 
-export default DogsList
+export default DogsList  

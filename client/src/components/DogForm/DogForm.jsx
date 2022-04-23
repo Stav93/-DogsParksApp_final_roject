@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useReducer} from 'react'
 import { useUsersContext } from "../../Context/user-context"
+import { useDogsContext } from "../../Context/dogs-context"
 import Button from "../UI/Button/Button"
 import classes from "./DogForm.module.css"
 import Input from '../Input/input'
@@ -52,26 +53,27 @@ function DogForm({hideForm}) {
   const [message, setMessage] = useState(false)
   const [formIsValid, setFormIsValid] = useState(false);
   const usersCtx = useUsersContext();
+  const dogsCtx = useDogsContext();
 
   const [state, dispatchFunc] = useReducer(reducerFunc, {
     nameState: {
-      value: '', //state.nameState.value
+      value: dogsCtx.editing ? dogsCtx.dog.name : "", //state.nameState.value
       isValid: null, //state.nameState.isValid
     },
     yearOfBirthState: {
-      value: '', //state.yearOfBirthState.value
+      value: dogsCtx.editing ? dogsCtx.dog.year_of_birth : '', //state.yearOfBirthState.value
       isValid: null, //state.yearOfBirthState.isValid
     },
     weightState: {
-      value: '', //state.weightState.value
+      value: dogsCtx.editing ? dogsCtx.dog.weight : '', //state.weightState.value
       isValid: null, //state.weightState.isValid
     },
     likesState: {
-      value: '', //state.likesState.value
+      value: dogsCtx.editing ? dogsCtx.dog.likes : '', //state.likesState.value
       isValid: null, //state.likesState.isValid
     },
     dislikeState: {
-      value: '', //state.dislikeState.value
+      value: dogsCtx.editing ? dogsCtx.dog.dislike :'', //state.dislikeState.value
       isValid: null, //state.dislikeState.isValid
     },
   })
@@ -159,17 +161,33 @@ function DogForm({hideForm}) {
    } 
   ;
 
-  // submit - SignUp
-  const submitHandler = async (event) => {
-    event.preventDefault();
-    hideForm();
-    addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, usersCtx.user._id);
+  const saveEditingFunc = async (name, year_of_birth, weight, likes, dislike) => {
+    try {
+      const respone = await fetch(`/api/dogs/${dogsCtx.dog._id}`,  
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({name, year_of_birth, weight, likes, dislike}),
+        }
+      );
+     }
+    catch (error) {
+        console.log("Error: " + error)
+      } 
   }
 
-
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    dogsCtx.hideFormFunc();;
+    dogsCtx.editing ? saveEditingFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue,) :
+    addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, usersCtx.user._id);
+    window.location.reload();
+  }
 
   return (
-    <Modal onClose={hideForm}>
+    <Modal onClose={dogsCtx.hideFormFunc}>
       <form onSubmit={submitHandler} className={classes.form}>
       <h1>Add A Dog</h1>
       <Input
@@ -182,10 +200,11 @@ function DogForm({hideForm}) {
         onBlur={validateNameHandler}
         placeholder="Please enter dog's Name"
       />
+      {console.log(dogsCtx.editing)}
      <Input
         id="yearOfBirth"
         label="Year Of Birth" 
-        type="date" 
+        type="text" 
         // isValid={yearOfBirthIsValid} 
         value={yearOfBirthValue}
         onChange={yearOfBirthChangeHandler}
@@ -224,14 +243,14 @@ function DogForm({hideForm}) {
         placeholder="What does your dog dislike?"
       />
       <div className={classes.actions}>
-      <Button type="submit"  className={`${classes.btn} ${classes.btnDog}`} disableBtn={!formIsValid}>
-          Add
+      <Button type="submit" className={`${classes.btn} ${classes.btnDog}`} disableBtn={!formIsValid}>
+      {dogsCtx.editing ? "Save" : "Add"}
        </Button>
-       <a onClick={hideForm}>cancle</a>
+       <a onClick={dogsCtx.hideFormFunc}>cancle</a>
       </div>
     </form>
     </Modal>
-  )
+  )  
 }
 
 export default DogForm

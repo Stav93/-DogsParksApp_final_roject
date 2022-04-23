@@ -200,7 +200,7 @@ function SignUp()  {
        </Button>
        {usersCtx.message && <p className={classes.loginMessage}>please enter valid values</p>}
        <div>
-        <span className={classes.signUp}><Link to="/">login instead</Link></span> 
+        <span className={classes.signUp}><Link to="/login">login instead</Link></span> 
       </div>
       </div>
     </form>

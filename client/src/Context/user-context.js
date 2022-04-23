@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 
 const UsersContext = React.createContext({});
 
-const UsersContextProvider = ({children}) => {
+const UsersContextProvider = ({children}) => {  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [message, setMessage] = useState(false)
   const [user, setUser] = useState({});
@@ -12,7 +12,7 @@ const UsersContextProvider = ({children}) => {
   const clickLogOutHandler = useNavigate();
   const navigate = useNavigate();
 
-  // אם היוזר עשה לוג אין או סיין אפ אז להפוך לטרו
+
 useEffect(() => {
   const storedUserLoggedInInformaition = localStorage.getItem('isLoggedIn');
 
@@ -85,6 +85,12 @@ useEffect(() => {
       setIsLoggedIn(false);
       clickLogOutHandler("/login")
     }
+
+    // useEffect(() => {
+    //   fetch(`/api/dogs/users/${usersCtx.user._id}`)
+    //   .then(response => response.json())
+    //   .then(data => setDogs(data));
+    //   }, []);
 
     const value = useMemo(() => ({
       isLoggedIn: isLoggedIn,
