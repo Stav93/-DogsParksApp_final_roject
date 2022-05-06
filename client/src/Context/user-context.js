@@ -15,6 +15,9 @@ const UsersContextProvider = ({children}) => {
 
 useEffect(() => {
   const storedUserLoggedInInformaition = localStorage.getItem('isLoggedIn');
+  // אם אני לא מחוברת ללכת תלוגין אחרת כלום
+  // או אם לא עובד בהכל אז להשאיר ככה אלא פה יבדוק מה יש בראוט פט לוקיישן ולשים בנביגייט
+
 
   if (storedUserLoggedInInformaition !== null) {
     const userData = JSON.parse(storedUserLoggedInInformaition);

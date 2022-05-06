@@ -62,7 +62,7 @@ function Login()  {
 
   useEffect(() => {
     // רוצים לנקות את הטיימר כל פעם שהיוזר סיים להקליד
-    const identifier = setTimeout(() => {
+    const cleanup = setTimeout(() => {
       console.log("checking for validity")
       setFormIsValid(
         emailIsValid && passwordIsValid
@@ -74,7 +74,7 @@ function Login()  {
     // חוץ מבפעם הראשונה
     return () => {
       console.log("cleanup")
-      clearTimeout(identifier);
+      clearTimeout(cleanup);
     };
   }, [emailIsValid, passwordIsValid]);
 

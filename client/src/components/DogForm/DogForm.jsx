@@ -133,33 +133,6 @@ function DogForm({hideForm}) {
   const validateNameHandler = () => {
     dispatchFunc({type: 'NAME_BLUR'});
   };
-  // const yearOfBirthChangeHandler = () => {
-  //   dispatchFunc({type: 'EMAIL_BLUR'});
-  // };
-  // const validateCityHandler = () => {
-  //   dispatchFunc({type: 'CITY_BLUR'});
-  // };
-  // const validatePasswordHandler = () => {
-  //   dispatchFunc({type: 'PASSWORD_BLUR'});
-  // };
-
-  const addDogFunc = async (name, year_of_birth, weight, likes, dislike, userId) => {
-    try {
-      const respone = await fetch("/api/dogs",  
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({name, year_of_birth, weight, likes, dislike, userId}),
-        }
-      );
-     }
-      catch (error) {
-         console.log("Error: " + error)
-       } 
-   } 
-  ;
 
   const saveEditingFunc = async (name, year_of_birth, weight, likes, dislike) => {
     try {
@@ -182,8 +155,8 @@ function DogForm({hideForm}) {
     event.preventDefault();
     dogsCtx.hideFormFunc();;
     dogsCtx.editing ? saveEditingFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue,) :
-    addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, usersCtx.user._id);
-    window.location.reload();
+    dogsCtx.addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, usersCtx.user._id);
+    // window.location.reload();
   }
 
   return (

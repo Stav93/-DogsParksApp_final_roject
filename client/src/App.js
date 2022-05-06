@@ -8,6 +8,7 @@ import { useUsersContext } from "../src/Context/user-context"
 import { Routes, Route, Outlet } from "react-router-dom"
 import DogsList from "./components/DogsList/DogsList"
 import ParksList from "./components/ParksList/ParksList"
+import UserParksList from "./components/UserParksList/UserParksList"
 import DogForm from "./components/DogForm/DogForm"
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path="dogs" element={<DogsList/>}>
             <Route path="AddADog" element={<DogForm/>}></Route>
           </Route>
-          <Route path="parks" element={<ParksList/>}></Route>
+          <Route path="parks" element={<UserParksList/>}></Route>
         </Route>
         <Route path="parks" element={<ParksList/>}></Route>
         <Route path="/sign-up" element={usersCtx.isLoggedIn ? <UserProfile/> : <SignUp/>} />

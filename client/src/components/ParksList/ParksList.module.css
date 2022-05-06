@@ -1,0 +1,37 @@
+.container {
+ margin-top: 55px;
+}
+
+label {
+  color: #782489;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.parks {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+select {
+  background-color:#a62ebe;
+  color: white;
+  border-radius: 4px;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .dropdown {
+    margin-top: 20px;
+  }
+}

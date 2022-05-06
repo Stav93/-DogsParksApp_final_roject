@@ -16,6 +16,13 @@ export async function getParkById(id) {
     return parksColection.findOne({_id: ObjectID(id)})
 }
 
+export async function getParksByUserId(userId) {
+    const parksColection = await getParksColletion();
+    return parksColection.find({
+      userId
+    }).toArray();   
+  }
+
 export async function addPark(newPark) {
     const parksColection = await getParksColletion();
     return parksColection.insertOne(newPark);

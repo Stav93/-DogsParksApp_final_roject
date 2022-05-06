@@ -9,19 +9,85 @@ const DogsContextProvider = ({children}) => {
   const [dogs, setDogs] = useState([]);
   const [dog, setDog] = useState("")
   const [editing, setEditing] = useState(false);
+  const [showDeletePopUp, setShowDeletePopUp] = useState(false)
 
-     //להביא את הכלבים של היוזר
-      useEffect(() => {
+  //להביא את הכלבים של היוזר
+  useEffect(() => {
+    if (usersCtx.user._id === undefined) {
+      return;
+    } else {
       fetch(`/api/dogs/users/${usersCtx.user._id}`)
       .then(response => response.json())
       .then(data => setDogs(data));
-      }, []);
+      }
+    }, [usersCtx.user._id]);
 
-      // useEffect(() => {
-      // fetch(`/api/dogs/users/622cf265ec0d6b987dd8405a`)
-      // .then(response => response.json())
-      // .then(data => setDogs(data));
-      // }, []);
+
+
+  // להוסיף למערך וליואיי ואז פצ לדאטא בייס
+  const addDogFunc = async (name, year_of_birth, weight, likes, dislike, userId) => {
+    setDogs([{name, year_of_birth, weight, likes, dislike, userId, _id: ""}, ...dogs])
+    try {
+      const respone = await fetch("/api/dogs", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({name, year_of_birth, weight, likes, dislike, userId}),
+      });
+      const data = await respone.json();
+      const _id = data.insertedId;
+      const dogsNew = [{name, year_of_birth, weight, likes, dislike, userId, _id}, ...dogs]
+      setDogs(dogsNew);
+    } catch (error) {
+      // remove added dog
+      dogs.shift()
+      setDogs(dogs)
+      console.log("Error: " + error)
+    } 
+  };
+
+  const hidePopUp = () => {
+    setShowDeletePopUp(false);
+  }
+
+  const showPopUp = () => {
+    setShowDeletePopUp(true);
+  }
+
+  // העלאת הפופ אפ של המחיקה
+  const deletePopUpHandler = () => {
+    showPopUp();
+  }
+  
+  // בזמן הפופ אפ - הכלב שאנחנו רוצים למחוק
+  const deleteDogHandler = ({_id, name, year_of_birth, weight, likes, dislike}) => {
+    showPopUp();
+    setDog({_id, name, year_of_birth, weight, likes, dislike})
+  }
+
+  // בלחיצה על מחיקה בתוך הפופאפ
+  const deleteDogFinal = async () => {
+    console.log(dog)
+    const id = dog._id;
+    setShowDeletePopUp(false);
+    try {
+      const respone = await fetch(`/api/dogs/${id}`,  
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({id}),
+        }
+      );
+      setDogs(dogs.filter(d => d.id !== id))
+      console.log(dogs)
+     }
+      catch (error) {
+         console.log("Error: " + error)
+       } 
+  }
 
       const AddADogHandler = () => {
         setShowForm(true);
@@ -42,18 +108,23 @@ const DogsContextProvider = ({children}) => {
     const value = useMemo(() => ({
       dogs,
       showForm,
+      addDogFunc,
       AddADogHandler,
+      deletePopUpHandler,
+      showDeletePopUp,
+      hidePopUp,
+      deleteDogHandler,
+      deleteDogFinal,
       hideFormFunc,
       EditDogFunc,
       dog,
       editing,
-    }), [dogs, showForm, AddADogHandler, hideFormFunc, EditDogFunc, dog, editing]);
+    }), [dogs, showForm, addDogFunc, AddADogHandler, deletePopUpHandler, deleteDogFinal, showDeletePopUp, hidePopUp, deleteDogHandler, hideFormFunc, EditDogFunc, dog, editing]);
       
 
     return (
       <DogsContext.Provider value={value}>
         {children}
-        {console.log(`/api/dogs/users/${usersCtx.user._id}`)}
       </DogsContext.Provider>
     );
   }

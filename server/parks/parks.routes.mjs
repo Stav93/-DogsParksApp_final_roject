@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { addPark, editPark, getAllParks, getParkById, removePark } from './parks.data.mjs';
+import { addPark, editPark, getAllParks, getParkById, getParksByUserId, removePark } from './parks.data.mjs';
 // import { getProductBySellerId } from '../products/products.data.mjs';
 
 export const ParksRouter = Router();
@@ -21,6 +21,11 @@ export const ParksRouter = Router();
  ParksRouter.get('/:id', async (req, res) => {
    res.send(await getParkById(req.params.id));
  });
+
+ //READ - Get Parks By User ID
+ ParksRouter.get('/users/:id', async (req, res) => {
+  res.send(await getParksByUserId(req.params.id));
+});
 
  //READ
  ParksRouter.get('/:id/products', async (req, res) => {

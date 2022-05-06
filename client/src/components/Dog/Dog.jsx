@@ -5,47 +5,29 @@ import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
 import {useDogsContext} from "../../Context/dogs-context"
 
-function Dog({_id, name, year_of_birth, weight, likes, dislike, onEdit}) {
+function Dog({_id, name, year_of_birth, weight, likes, dislike}) {
   const dogsCtx = useDogsContext();
-  const [showDeletePopUp, setShowDeletePopUp] = useState(false)
 
-  const deletePopUpHandler = () => {
-    setShowDeletePopUp(true);
-  }
-
-  const deleteDogHandler = async () => {
-    hidePopUp();
-    try {
-      const respone = await fetch(`/api/dogs/${_id}`,  
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({_id}),
-        }
-      );
-     }
-      catch (error) {
-         console.log("Error: " + error)
-       } 
-       window.location.reload();
-  }
-
-  const hidePopUp = () => {
-    setShowDeletePopUp(false);
-  }
-
+ 
   const editDogHandler = () => {
     dogsCtx.EditDogFunc({_id, name, year_of_birth, weight, likes, dislike});
   }
 
+  // לחיצה על מחיקה בתוך הפופ אפ
+  const deletePopUpHelper = () => {
+  }
+
+  // העלאת הפופ אפ ושליחת פרטי הכלב לקונטקסט
+  const dogDeletePopUp = () => {
+    dogsCtx.deleteDogHandler({_id, name, year_of_birth, weight, likes, dislike})
+  }
+
   return (
     <div className={classes.dog}>
-      {showDeletePopUp && <Modal onClose={hidePopUp}>
+      {dogsCtx.showDeletePopUp && <Modal onClose={dogsCtx.hidePopUp}>
           <h3>Are you sure you want to delete this dog?</h3>
-          <Button className={`${classes.btn} ${classes.btnDog}`} onClick={deleteDogHandler}> Delete</Button>
-          <a onClick={hidePopUp}>cancle</a>
+          <Button className={`${classes.btn} ${classes.btnDog}`} onClick={dogsCtx.deleteDogFinal}> Delete</Button>
+          <a onClick={dogsCtx.hidePopUp}>cancle</a>
       </Modal>}
       <Card>
         <label>{name}</label>
@@ -54,7 +36,7 @@ function Dog({_id, name, year_of_birth, weight, likes, dislike, onEdit}) {
         <h3>Likes: {likes}</h3>
         <h3>Dislike: {dislike}</h3>
         <div className={classes.icons}>
-          <div className={classes.icon} onClick={deletePopUpHandler}>
+          <div className={classes.icon} onClick={dogDeletePopUp}>
             <i className="fas fa-trash fa-1x"></i>
             <label>Delete</label>
           </div>
