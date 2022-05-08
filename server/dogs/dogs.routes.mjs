@@ -22,10 +22,6 @@ export const DogsRouter = Router();
    res.send(await getDogById(req.params.id));
  });
 
- //READ - Get Dogs By User ID
- DogsRouter.get('/users/:id', async (req, res) => {
-    res.send(await getDogsByUserId(req.params.id));
- });
  
 //  POST - add dog
  DogsRouter.post('/', async (req, res) => {
@@ -33,8 +29,8 @@ export const DogsRouter = Router();
  });
 
  //UPDATE - PUT by ID
- DogsRouter.put('/:id', (req, res) => {
-   res.send(editDog(req.params.id, req.body));
+ DogsRouter.put('/:id', async (req, res) => {
+   res.send(await editDog(req.params.id, req.body));
  });
  
  //DELETE - DELET by ID

@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import { addPark, editPark, getAllParks, getParkById, getParksByUserId, removePark } from './parks.data.mjs';
+import {addUserLike} from "./parks.data.mjs"
 // import { getProductBySellerId } from '../products/products.data.mjs';
 
 export const ParksRouter = Router();
@@ -23,19 +24,19 @@ export const ParksRouter = Router();
  });
 
  //READ - Get Parks By User ID
- ParksRouter.get('/users/:id', async (req, res) => {
-  res.send(await getParksByUserId(req.params.id));
-});
-
- //READ
- ParksRouter.get('/:id/products', async (req, res) => {
-    res.send(await getProductBySellerId(req.params.id));
- });
+//  ParksRouter.get('/users/:id', async (req, res) => {
+//   res.send(await getParksByUserId(req.params.id));
+// });
  
 //  POST - add user
  ParksRouter.post('/', async (req, res) => {
    res.send(await addPark(req.body));
  });
+
+//  POST - like to park by user - add userid to users array
+ParksRouter.post("/:id/like/", async (req, res) => {
+  res.send(await addUserLike(req.params.id, req.body.userId));
+})  
 
  //UPDATE - PUT by ID
  ParksRouter.put('/:id', (req, res) => {

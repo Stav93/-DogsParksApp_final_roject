@@ -8,7 +8,7 @@ function UserParksList() {
   const [parks, setParks] = useState([])
 
   useEffect(() => {
-    fetch(`/api/parks/users/${usersCtx.user._id}`)
+    fetch(`/api/users/${usersCtx.user._id}/parks`)
     .then(response => response.json())
     .then(data => setParks(data));
   }, []);

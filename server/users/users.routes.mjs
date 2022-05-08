@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import { addUser, editUser, getAllUsers, getUserById, removeUser , getUserByNameAndEmail} from './users.data.mjs';
 import { getDogsByUserId } from '../dogs/dogs.data.mjs';
+import { getParksByUserId } from '../parks/parks.data.mjs';
 
 export const UsersRouter = Router();
 
@@ -17,6 +18,11 @@ export const UsersRouter = Router();
    res.send(await getAllUsers());
  });
 
+  //READ - Get Dogs By User ID
+  UsersRouter.get('/:id/dogs', async (req, res) => {
+    res.send(await getDogsByUserId(req.params.id));
+ });
+
  //  READ - GET by ID
  UsersRouter.get('/:id', async (req, res) => {
    res.send(await getUserById(req.params.id));
@@ -25,6 +31,11 @@ export const UsersRouter = Router();
  //READ - Get dog(s) by (User) ID
  UsersRouter.get('/:id/dogs', async (req, res) => {
     res.send(await getDogsByUserId(req.params.id));
+ });
+
+ //READ - Get dog(s) by (User) ID
+ UsersRouter.get('/:id/parks', async (req, res) => {
+    res.send(await getParksByUserId(req.params.id));  
  });
 
 //  להביא יוזר עם האימייל והסיסמא ששמנו בלוג אין post 
@@ -37,11 +48,6 @@ UsersRouter.post('/login', async (req, res) => {
 UsersRouter.post('/signup', async (req, res) => {
   res.send(await addUser(req.body));
 });
-
-//  POST - add user
-//  UsersRouter.post('/', async (req, res) => {
-//    res.send(await addUser(req.body));
-//  });
 
  //UPDATE - PUT by ID
  UsersRouter.put('/:id', (req, res) => {

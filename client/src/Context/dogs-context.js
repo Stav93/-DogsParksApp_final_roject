@@ -16,8 +16,8 @@ const DogsContextProvider = ({children}) => {
     if (usersCtx.user._id === undefined) {
       return;
     } else {
-      fetch(`/api/dogs/users/${usersCtx.user._id}`)
-      .then(response => response.json())
+      fetch(`/api/users/${usersCtx.user._id}/dogs`)
+      .then(response => response.json()) 
       .then(data => setDogs(data));
       }
     }, [usersCtx.user._id]);
@@ -25,19 +25,19 @@ const DogsContextProvider = ({children}) => {
 
 
   // להוסיף למערך וליואיי ואז פצ לדאטא בייס
-  const addDogFunc = async (name, year_of_birth, weight, likes, dislike, userId) => {
-    setDogs([{name, year_of_birth, weight, likes, dislike, userId, _id: ""}, ...dogs])
+  const addDogFunc = async (name, year_of_birth, weight, likes, dislike, owner) => {
+    setDogs([{name, year_of_birth, weight, likes, dislike, owner, _id: ""}, ...dogs])
     try {
       const respone = await fetch("/api/dogs", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({name, year_of_birth, weight, likes, dislike, userId}),
+        body: JSON.stringify({name, year_of_birth, weight, likes, dislike, owner}),
       });
-      const data = await respone.json();
-      const _id = data.insertedId;
-      const dogsNew = [{name, year_of_birth, weight, likes, dislike, userId, _id}, ...dogs]
+      const dogsNewDB = await respone.json();
+      // const _id = data.insertedId;
+       const dogsNew = [dogsNewDB, ...dogs]
       setDogs(dogsNew);
     } catch (error) {
       // remove added dog
@@ -64,6 +64,7 @@ const DogsContextProvider = ({children}) => {
   const deleteDogHandler = ({_id, name, year_of_birth, weight, likes, dislike}) => {
     showPopUp();
     setDog({_id, name, year_of_birth, weight, likes, dislike})
+    setDogs(dogs.filter(d => d._id !== _id))
   }
 
   // בלחיצה על מחיקה בתוך הפופאפ
@@ -105,6 +106,10 @@ const DogsContextProvider = ({children}) => {
         console.log(dog)
       }
 
+      const saveDogsAfterEdit = (dogs) => {
+        setDogs(dogs)
+      }
+
     const value = useMemo(() => ({
       dogs,
       showForm,
@@ -117,9 +122,10 @@ const DogsContextProvider = ({children}) => {
       deleteDogFinal,
       hideFormFunc,
       EditDogFunc,
+      saveDogsAfterEdit,
       dog,
       editing,
-    }), [dogs, showForm, addDogFunc, AddADogHandler, deletePopUpHandler, deleteDogFinal, showDeletePopUp, hidePopUp, deleteDogHandler, hideFormFunc, EditDogFunc, dog, editing]);
+    }), [dogs, showForm, addDogFunc, AddADogHandler, deletePopUpHandler, deleteDogFinal, showDeletePopUp, hidePopUp, deleteDogHandler, hideFormFunc, EditDogFunc, saveDogsAfterEdit, dog, editing]);
       
 
     return (

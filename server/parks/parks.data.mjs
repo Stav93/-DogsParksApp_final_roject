@@ -1,39 +1,37 @@
-import { getDB } from "../db.mjs"
-import { ObjectID } from "bson";
+import {Park} from "./parks.model.mjs"
 
-async function getParksColletion() {
-    const db = await getDB();
-    return db.collection("parks"); 
-  }
+
 
 export async function getAllParks() {
-    const parksColection = await getParksColletion();
-    return parksColection.find({}).toArray();
+    return Park.find();
 }
 
-export async function getParkById(id) {
-    const parksColection = await getParksColletion();
-    return parksColection.findOne({_id: ObjectID(id)})
-}
-
-export async function getParksByUserId(userId) {
-    const parksColection = await getParksColletion();
-    return parksColection.find({
-      userId
-    }).toArray();   
+export async function getParksByUserId(owner) {
+    return Park.find({ users: owner })
   }
 
+  export async function addUserLike(parkId, userId) {
+      const park = await getParkById(parkId);
+      if(!park.users) park.users = [];
+      park.users.push(userId);
+      return park.save();
+  }
+
+
+export async function getParkById(id) {
+    return Park.findById(id);
+}
+
+
 export async function addPark(newPark) {
-    const parksColection = await getParksColletion();
-    return parksColection.insertOne(newPark);
+    const park = new Park(newPark); 
+    return park.save();
 }
 
 export async function removePark(id) {
-    const parksColection = await getParksColletion();
-    return parksColection.deleteOne({_id: ObjectID(id)});
+    return Park.findByIdAndDelete(id);
 }
 
 export async function editPark(id, park) {
-    const parksColection = await getParksColletion();
-  return parksColection.updateOne({_id: ObjectID(id)} , { $set: park })
+    return User.findByIdAndUpdate(id, park)
 }

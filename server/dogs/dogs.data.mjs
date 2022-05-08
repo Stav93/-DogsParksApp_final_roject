@@ -1,40 +1,27 @@
-import { getDB } from "../db.mjs"
-import { ObjectID } from "bson";
+import {Dog} from "./dogs.model.mjs";
 
-async function getDogsColletion() {
-    const db = await getDB();
-    return db.collection("dogs"); 
-  }
 
 export async function getAllDogs() {
-    const dogsColection = await getDogsColletion();
-    return dogsColection.find({}).toArray();
+  return Dog.find();
 }
 
 export async function getDogById(id) {
-    const dogsColection = await getDogsColletion();
-    return dogsColection.findOne({_id: ObjectID(id)})
+  return Dog.findById(id);
 }
 
 export async function addDog(newDog) {
-    const dogsColection = await getDogsColletion();
-    return dogsColection.insertOne(newDog);
+  const dog = new Dog(newDog); 
+  return dog.save();
 }
 
 export async function removeDog(id) {
-    const dogsColection = await getDogsColletion();
-    return dogsColection.deleteOne({_id: ObjectID(id)});
+  return Dog.findByIdAndDelete(id);
 }
 
 export async function editDog(id, dog) {
-  const dogsColection = await getDogsColletion();
-  console.log(id, dog)
-  return dogsColection.updateOne({_id: ObjectID(id)} , { $set: dog })
+  return Dog.findByIdAndUpdate(id, dog, {new: true})
 }
 
-export async function getDogsByUserId(userId) {
-  const dogsColection = await getDogsColletion();
-  return dogsColection.find({
-    userId
-  }).toArray();
+export async function getDogsByUserId(owner) {
+  return Dog.find({owner});
 }

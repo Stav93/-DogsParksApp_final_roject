@@ -136,19 +136,23 @@ function DogForm({hideForm}) {
 
   const saveEditingFunc = async (name, year_of_birth, weight, likes, dislike) => {
     try {
-      const respone = await fetch(`/api/dogs/${dogsCtx.dog._id}`,  
+      const response = await fetch(`/api/dogs/${dogsCtx.dog._id}`,  
         {
-          method: 'PUT',
+          method: 'PUT', 
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({name, year_of_birth, weight, likes, dislike}),
         }
       );
-     }
-    catch (error) {
+      const dogsNewDB = await response.json()
+       console.log(dogsNewDB);
+       const dogsNew = dogsCtx.dogs.map(dog => dog._id === dogsNewDB._id ? dogsNewDB : dog)
+       dogsCtx.saveDogsAfterEdit(dogsNew)
+     }catch (error) {
         console.log("Error: " + error)
       } 
+    
   }
 
   const submitHandler = async (event) => {

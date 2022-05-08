@@ -1,44 +1,30 @@
-import { getDB } from "../db.mjs"
-import { ObjectID } from "bson";
-
-async function getUsersColletion() {
-    const db = await getDB();
-    return db.collection("users"); 
-  }
+import { User } from "./users.model.mjs"
 
 export async function getAllUsers() {
-    const usersColection = await getUsersColletion();
-    return usersColection.find({}).toArray();
+    return User.find();
 }
 
 export async function getUserById(id) {
-    const usersColection = await getUsersColletion();
-    return usersColection.findOne({_id: ObjectID(id)})
+    return User.findById(id);
 }
 
+// Login
 export async function getUserByNameAndEmail(email, password) {
-    const usersColection = await getUsersColletion();
-    const user = usersColection.findOne({email, password})
+    const user = await User.where({email, password}).findOne();
     return user;
 }
 
+// SignUp
 export async function addUser(newUser) {
-    const usersColection = await getUsersColletion();
-    const user = usersColection.insertOne(newUser);
-    return newUser;
+    const user = new User(newUser); 
+    return user.save();
 }
-// export async function addUser(newUser) {
-//     const usersColection = await getUsersColletion();
-//     const user = usersColection.insertOne(newUser);
-//     return user;
-// }
+
 
 export async function removeUser(id) {
-    const usersColection = await getUsersColletion();
-    return usersColection.deleteOne({_id: ObjectID(id)});
+    return User.findByIdAndDelete(id);
 }
 
 export async function editUser(id, user) {
-    const usersColection = await getUsersColletion();
-  return usersColection.updateOne({_id: ObjectID(id)} , { $set: user })
+    return User.findByIdAndUpdate(id, user)
 }
