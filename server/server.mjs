@@ -5,7 +5,7 @@ import bodyParser  from 'body-parser';
 import { AppRouter } from './routes.mjs';
 import "./db.mjs"
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 export const app = express();
 
 app.listen(port);
