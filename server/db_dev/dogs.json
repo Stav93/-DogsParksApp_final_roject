@@ -1,0 +1,30 @@
+[
+  {
+    "name": "בילי",
+    "year_of_birth": "2020",
+    "weight":"26.5",
+    "likes": "food, sleep, play",
+    "dislike": "אופנועים, קורקינטים, ואופניים"
+  },
+  {
+    "name": "דובי",
+    "year_of_birth": "2019",
+    "weight":"24",
+    "likes": "food, sleep, play, eat",
+    "dislike": "rain"
+  },
+  {
+    "name": "מקגייוור",
+    "year_of_birth": "2015",
+    "weight":"33",
+    "likes": "food, sleep, play",
+    "dislike": ""
+  },
+  {
+    "name": "יאנוש-איציק",
+    "year_of_birth": "2016",
+    "weight":"34",
+    "likes": "food, sleep",
+    "dislike": "taking a shower"
+  }
+]

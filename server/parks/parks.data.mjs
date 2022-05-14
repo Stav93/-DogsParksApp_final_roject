@@ -6,22 +6,30 @@ export async function getAllParks() {
     return Park.find();
 }
 
-export async function getParksByUserId(owner) {
-    return Park.find({ users: owner })
+export async function getParksByUserId(userId) {
+    return Park.find({ users: userId })
   }
 
-  export async function addUserLike(parkId, userId) {
-      const park = await getParkById(parkId);
-      if(!park.users) park.users = [];
-      park.users.push(userId);
-      return park.save();
-  }
-
-
-export async function getParkById(id) {
+  export async function getParkById(id) {
     return Park.findById(id);
 }
 
+export async function addUserLike(parkId, userId) {
+    const park = await getParkById(parkId);
+    if(!park.users) park.users = [];
+    console.log("before " + park.users)
+    park.users.push(userId);  
+    console.log("after " + park.users)
+    return park.save();
+}
+
+export async function removeUserLike(parkId, userId) {
+    const park = await getParkById(parkId);
+    const userID = Park.find({ users: userId })
+    park.users.filter(user => user.id !== userID)
+    console.log("after " + park.users)
+    return park.save();
+}
 
 export async function addPark(newPark) {
     const park = new Park(newPark); 

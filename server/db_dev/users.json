@@ -1,0 +1,32 @@
+[
+  {
+  "name": "Stav Librowski",
+  "email": "stavush93@hotmail.com",
+  "city": "תל-אביב",
+  "password": "111111"
+  },
+  {
+  "name": "Yair Walden",
+  "email": "Yair@myEmail.com",
+  "city": "תל-אביב",
+  "password": "222222"
+  },
+  {
+  "name": "Dima Ruban",
+  "email": "Dima@mail.com",
+  "city": "תל-אביב",
+  "password": "333333"
+  },
+  {
+  "name": "Boaz Sachs",
+  "email": "boaz@mail.com",
+  "city": "תל-אביב",
+  "password": "444444"
+  },
+  {
+  "name": "סתיו ליברובסקי",
+  "email": "stavush93@gmail.com",
+  "city": "תל-אביב",
+  "password": "123456"
+  }
+]

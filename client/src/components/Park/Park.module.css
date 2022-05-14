@@ -3,3 +3,19 @@
   margin: 5px;
   border: 0.3px solid #a62ebe;
 }
+
+.like {
+  background-color: #a62ebe;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border-color: white;
+  width: 20%;
+}
+
+.like:hover {
+  color: #f9a6f1;
+}
