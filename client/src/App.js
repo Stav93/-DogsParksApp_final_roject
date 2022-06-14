@@ -16,8 +16,6 @@ function App() {
   return (
     <div className="App main">
       <MainHeader/>
-      {/* {!usersCtx.isLoggedIn && <Login/>}
-      {usersCtx.isLoggedIn && <UserProfile/>} */}
       <Routes>
         <Route path="/login" element={<Login/>} />
         <Route path="/profile/:userName" element={usersCtx.isLoggedIn ? <UserProfile/> : <Login/>}>

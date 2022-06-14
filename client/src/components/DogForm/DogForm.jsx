@@ -99,7 +99,7 @@ function DogForm({hideForm}) {
     const identifier = setTimeout(() => {
       console.log("checking for validity")
       setFormIsValid(
-        nameIsValid
+        nameIsValid || nameValue
       );
     }, 500)
     // מחזירים פונקציה אחת
@@ -110,7 +110,7 @@ function DogForm({hideForm}) {
       console.log("cleanup")
       clearTimeout(identifier);
     };
-  }, [nameIsValid]);
+  }, [nameIsValid, nameValue]);
 
   // FormValidation
   // פונקציות שמשתמשים בהן כדי לשלוח דרך הדיספאצ 
@@ -152,7 +152,6 @@ function DogForm({hideForm}) {
      }catch (error) {
         console.log("Error: " + error)
       } 
-    
   }
 
   const submitHandler = async (event) => {
@@ -160,7 +159,7 @@ function DogForm({hideForm}) {
     dogsCtx.hideFormFunc();;
     dogsCtx.editing ? saveEditingFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue,) :
     dogsCtx.addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, usersCtx.user._id);
-    // window.location.reload();
+  
   }
 
   return (

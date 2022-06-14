@@ -89,11 +89,39 @@ useEffect(() => {
       clickLogOutHandler("/login")
     }
 
-    // useEffect(() => {
-    //   fetch(`/api/dogs/users/${usersCtx.user._id}`)
-    //   .then(response => response.json())
-    //   .then(data => setDogs(data));
-    //   }, []);
+    const addLikesHandler = async (parkId) => {
+      try {
+        const userId = user._id;
+        const respone = await fetch(`/api/parks/${parkId}/like`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({userId}),
+        });
+        const data = await respone.json();
+        console.log(data)
+      } catch (error) {
+        console.log("Error: " + error)
+      } 
+    }
+
+    const removeLikesHandler = async (parkId) => {
+      try {
+        const userId = user._id;
+        const respone = await fetch(`/api/parks/${parkId}/dislike`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({userId}),
+        });
+        const data = await respone.json();
+        console.log(data)
+      } catch (error) {
+        console.log("Error: " + error)
+      } 
+    }
 
     const value = useMemo(() => ({
       isLoggedIn: isLoggedIn,
@@ -101,8 +129,10 @@ useEffect(() => {
       onLogout: logoutHandler,
       onLogin: loginHandler,
       onSignUp: signUpHandler,
+      onUserLike: addLikesHandler,
+      onUserUnlike: removeLikesHandler,
       user: user,
-    }), [isLoggedIn, message, logoutHandler, loginHandler, signUpHandler, user]);
+    }), [isLoggedIn, message, logoutHandler, loginHandler, signUpHandler, addLikesHandler, removeLikesHandler, user]);
 
     return (
       <UsersContext.Provider value={value}>

@@ -25,9 +25,12 @@ export async function addUserLike(parkId, userId) {
 
 export async function removeUserLike(parkId, userId) {
     const park = await getParkById(parkId);
-    const userID = Park.find({ users: userId })
-    park.users.filter(user => user.id !== userID)
+    // const userID = Park.find({ users: userId })
+    const parkLikes = park.users.filter(user => user.id !== userId)
+    park.users = parkLikes;
+    // park.users.filter(user => user._id !== userId)
     console.log("after " + park.users)
+    console.log("new " + parkLikes)
     return park.save();
 }
 

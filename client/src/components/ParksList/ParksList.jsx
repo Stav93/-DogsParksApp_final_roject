@@ -14,6 +14,30 @@ function ParksList() {
       .then(data => setParks(data));
   }, []);
 
+  const updateParks = (parkIndex, user, isLike) => {
+    if(isLike) {
+      // setParks(parks[parkIndex].users.push(user));
+      const parksNew = parks.map((park ,index) => {
+        if(index !== parkIndex) return park; 
+          else {
+            park.users.push(user);
+            return park;
+          } 
+      })
+      setParks(parksNew)
+    } else {
+      const parksNew = parks.map((park ,index) => {
+        if(index !== parkIndex) return park; 
+        else {
+          park.users.filter(u => u._id !== user._id);
+          return park;
+        } 
+      })
+      setParks(parksNew)
+      // setParks(parks[parkIndex].users = parks[parkIndex].users.filter(u => u._id !== user._id))
+    }
+  }
+
   // בהתאם לתנאי ולקונטקסט - יראה את כל הפארקים והדרופ דאון או רק את הפארקים של היוזר
   return (
       <div className={classes.container}>
@@ -30,15 +54,15 @@ function ParksList() {
      </div>
      <div className={classes.parks}>
        {console.log(selectedCity)}
-      {selectedCity === "All" ? parks.map(park => {
+      {selectedCity === "All" ? parks.map((park, index) => {
         return (
-          <Park key={park._id} {...park}/>
+          <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks} />
         );
       }) :
       parks.filter(park => park.city === selectedCity)
-        .map(park => {
+        .map((park, index) => {
         return (
-          <Park key={park._id} {...park}/>
+          <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks}/>
         );
       })
       }

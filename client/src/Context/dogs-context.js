@@ -64,7 +64,6 @@ const DogsContextProvider = ({children}) => {
   const deleteDogHandler = ({_id, name, year_of_birth, weight, likes, dislike}) => {
     showPopUp();
     setDog({_id, name, year_of_birth, weight, likes, dislike})
-    setDogs(dogs.filter(d => d._id !== _id))
   }
 
   // בלחיצה על מחיקה בתוך הפופאפ
@@ -82,7 +81,7 @@ const DogsContextProvider = ({children}) => {
           body: JSON.stringify({id}),
         }
       );
-      setDogs(dogs.filter(d => d.id !== id))
+      setDogs((prev)=>prev.filter(dog => dog._id !== id))
       console.log(dogs)
      }
       catch (error) {

@@ -1,31 +1,35 @@
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import Card from "../UI/Card/Card"
 import classes from "./Park.module.css"
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
 import {useUsersContext} from "../../Context/user-context"
 
-function Park({_id, name, city, street, addLikeHandler}) {
+function Park({_id, name, city, street, users, OnUpdateParks, index}) {
   const usersCtx = useUsersContext();
   const [like, setLike] = useState(false)
 
-  const updatePark = async () => {
-    if (!like) {
-      try {
-        const userId = usersCtx.user._id;
-        const respone = await fetch(`/api/parks/${_id}/like`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({userId}),
-        });
-        // addLikeHandler(park);
-        setLike(true)
-      } catch (error) {
-        console.log("Error: " + error)
-      } 
-    };
+  useEffect(() => {
+    for (let i = 0; i < users.length; i++) {
+      if(users[i]._id === usersCtx.user._id) {
+        setLike(true);
+        break;
+      }
+    }
+  }, [users])
+
+  const likesHandler = () => {
+    if(!like) {
+      usersCtx.onUserLike(_id)
+      // users.push(usersCtx.user)
+      // OnUpdateParks(index, usersCtx.user, true)
+      setLike(true)
+    } else {
+      usersCtx.onUserUnlike(_id)
+      // users = users.filter(user => user._id !==  usersCtx.user._id)
+      // OnUpdateParks(index, usersCtx.user, false)
+      setLike(false)
+    }
   }
 
   return (
@@ -34,7 +38,8 @@ function Park({_id, name, city, street, addLikeHandler}) {
         <label>{name}</label>
         <h3>City: {city}</h3>
         <h3>street: {street}</h3>
-        <button className={classes.like} disabled={like} onClick={updatePark}>{like ? "unlike" : "Like"}</button>
+        <button className={classes.like} onClick={likesHandler}>{like ? "unlike" : "Like"}</button>
+        {/* <button className={classes.like} disabled={like} onClick={updatePark}>{like ? "unlike" : "Like"}</button> */}
       </Card>
     </div>
   )
