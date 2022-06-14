@@ -11,7 +11,9 @@ function Park({_id, name, city, street, users, OnUpdateParks, index}) {
   const [likesCount, setLikesCount] = useState(0)
 
   useEffect(() => {
-    setLikesCount(users.length || 0)
+    if (users) {
+      setLikesCount(users.length);
+    }
     for (let i = 0; i < users.length; i++) {
       if(users[i]._id === usersCtx.user._id) {
         setLike(true);

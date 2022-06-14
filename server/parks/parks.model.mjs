@@ -1,4 +1,4 @@
-import {mongoose} from "mongoose";
+import { mongoose } from "mongoose";
 import autopopulate from "mongoose-autopopulate"
 
 const ParksSchema = new mongoose.Schema({
@@ -8,9 +8,8 @@ const ParksSchema = new mongoose.Schema({
   dislike: String,
   users: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User", 
-    autopopulate: true,
-    unique: true,
+    ref: "User",
+    autopopulate: true
   }],
 })
 
