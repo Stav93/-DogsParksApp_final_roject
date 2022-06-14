@@ -11,7 +11,7 @@ function Navigation() {
         {isLoggedIn && (
           <li>
             {/* add style to active page */}
-            <NavLink to={`/profile/${user.name.replace(/ /g,"")}/dogs`} 
+            <NavLink to={`/profile/${user.name?.replace(/ /g,"")}/dogs`} 
               className={({ isActive }) => {
                 return isActive ? classes.active : undefined
               }}
