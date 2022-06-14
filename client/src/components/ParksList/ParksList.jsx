@@ -29,7 +29,8 @@ function ParksList() {
       const parksNew = parks.map((park ,index) => {
         if(index !== parkIndex) return park; 
         else {
-          park.users.filter(u => u._id !== user._id);
+          let usersArr = park.users.filter(u => u._id !== user._id);
+          park.users = usersArr;
           return park;
         } 
       })

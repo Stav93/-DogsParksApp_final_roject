@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUsersContext } from "../../../Context/user-context"
 import classes from "./Navigation.module.css"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 function Navigation() {
   const { user, onLogout, isLoggedIn } = useUsersContext()
@@ -11,12 +11,22 @@ function Navigation() {
         {isLoggedIn && (
           <li>
             {/* add style to active page */}
-            <Link to={`/profile/${user.name}`}>My Profile</Link>
+            <NavLink to={`/profile/${user.name.replace(/ /g,"")}/dogs`} 
+              className={({ isActive }) => {
+                return isActive ? classes.active : undefined
+              }}
+              >
+                My Profile 
+            </NavLink>
           </li>
         )}
         {isLoggedIn && (
           <li>
-            <Link to={`/parks`}>Parks</Link>
+            <NavLink to={`/parks`}  className={({ isActive }) => {
+                return isActive ? classes.active : undefined
+              }}
+              >All Parks
+              </NavLink>
           </li>
         )}
         {isLoggedIn && (

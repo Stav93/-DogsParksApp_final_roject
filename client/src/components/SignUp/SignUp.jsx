@@ -198,7 +198,7 @@ function SignUp()  {
       <Button type="submit" className={classes.btn} disableBtn={!formIsValid}>
           SignUp
        </Button>
-       {usersCtx.message && <p className={classes.loginMessage}>please enter valid values</p>}
+       {usersCtx.signupMessage && <p className={classes.loginMessage}>please enter valid values</p>}
        <div>
         <span className={classes.signUp}><Link to="/login">login instead</Link></span> 
       </div>

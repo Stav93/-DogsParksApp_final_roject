@@ -43,6 +43,10 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.26);
 }
 
+.active {
+  color: #f3cafb !important;
+  font-weight: bold;
+}
 
 @media (max-width: 768px) {
   .nav a {

@@ -129,7 +129,7 @@ function Login()  {
       <Button type="submit" className={classes.btn} disableBtn={!formIsValid}>
           Login
        </Button>
-       {usersCtx.message && <p className={classes.loginMessage}>one or more is not correct</p>}
+       {usersCtx.loginMessage && <p className={classes.loginMessage}>one or more is not correct</p>}
        <div>
         <span className={classes.signUp}><Link to="/sign-up">sign up instead</Link></span> 
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useUsersContext } from "../../Context/user-context"
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import classes from "./UserProfile.module.css"
 
 function UserProfile() {
@@ -8,12 +8,21 @@ function UserProfile() {
 
   return (
     <div className={classes.container}>
-      <h1>{usersCtx.user.name}</h1>
+
+      <h1>Hi {usersCtx.user.name}!</h1>
       <div className={classes.links}>
-        <Link to={"dogs"}>My Dogs</Link>
-        <Link to={"parks"}>My Parks</Link>
+        <NavLink to={"dogs"} className={({ isActive }) =>
+          isActive ? classes.active : undefined
+        }>My Dogs
+        </NavLink>
+        <NavLink to={"parks"}
+          className={({ isActive }) =>
+            isActive ? classes.active : undefined
+          }
+        >My Parks
+        </NavLink>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
   )
 }
