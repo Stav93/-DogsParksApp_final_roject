@@ -38,7 +38,7 @@ function Park({_id, name, city, street, users, OnUpdateParks, index}) {
         <label>{name}</label>
         <h3>City: {city}</h3>
         <h3>street: {street}</h3>
-        <button className={classes.like} onClick={likesHandler}>{like ? "unlike" : "Like"} ({ users?.length })</button>
+        <button className={classes.like} onClick={likesHandler}>{like ? "unlike" : "Like"} ({ users ? users.length : 0 })</button>
         {/* <button className={classes.like} disabled={like} onClick={updatePark}>{like ? "unlike" : "Like"}</button> */}
       </Card>
     </div>
