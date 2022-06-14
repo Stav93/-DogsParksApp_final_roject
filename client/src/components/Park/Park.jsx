@@ -13,13 +13,14 @@ function Park({_id, name, city, street, users, OnUpdateParks, index}) {
   useEffect(() => {
     if (users) {
       setLikesCount(users.length);
-    }
-    for (let i = 0; i < users.length; i++) {
-      if(users[i]._id === usersCtx.user._id) {
-        setLike(true);
-        break;
+      for (let i = 0; i < users.length; i++) {
+        if(users[i]._id === usersCtx.user._id) {
+          setLike(true);
+          break;
+        }
       }
     }
+    
   }, [users])
 
   const likesHandler = () => {
