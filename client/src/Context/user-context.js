@@ -24,7 +24,7 @@ const UsersContextProvider = ({ children }) => {
       const userData = JSON.parse(storedUserLoggedInInformaition);
       setUser(userData);
       setIsLoggedIn(true);
-      navigate(`/profile/${userData.name}`);
+      navigate(`/profile/${userData.name?.replace(/ /g, "")}`);
     } else {
       navigate('/login');
     }
@@ -49,7 +49,7 @@ const UsersContextProvider = ({ children }) => {
         localStorage.setItem("isLoggedIn", JSON.stringify(userData));
         setIsLoggedIn(true);
         setUser(userData);
-        clickLogInHandler(`/profile/${userData.name}/dogs`);
+        clickLogInHandler(`/profile/${userData.name?.replace(/ /g, "")}/dogs`);
       }
     }
     catch (error) {
@@ -79,7 +79,7 @@ const UsersContextProvider = ({ children }) => {
         setIsLoggedIn(true);
         setUser(userData);
         console.log(userData);
-        clickLogInHandler(`/profile/${userData.name}`);
+        clickLogInHandler(`/profile/${userData.name?.replace(/ /g, "")}`);
       }
     }
     catch (error) {

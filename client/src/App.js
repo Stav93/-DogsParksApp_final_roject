@@ -11,25 +11,29 @@ import ParksList from "./components/ParksList/ParksList"
 import UserParksList from "./components/UserParksList/UserParksList"
 import DogForm from "./components/DogForm/DogForm"
 
+// function PageNotFound() {
+//   return <h1>Page Not Found</h1>
+// }
+
 function App() {
   const usersCtx = useUsersContext();
   return (
     <div className="App main">
-      <MainHeader/>
+      <MainHeader />
       <Routes>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/profile/:userName" element={usersCtx.isLoggedIn ? <UserProfile/> : <Login/>}>
-          <Route path="dogs" element={<DogsList/>}>
-            <Route path="AddADog" element={<DogForm/>}></Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile/:userName" element={usersCtx.isLoggedIn ? <UserProfile /> : <Login />}>
+          <Route path="dogs" element={<DogsList />}>
+            <Route path="AddADog" element={<DogForm />}></Route>
           </Route>
-          <Route path="parks" element={<UserParksList/>}></Route>
+          <Route path="parks" element={<UserParksList />}></Route>
         </Route>
-        <Route path="parks" element={<ParksList/>}></Route>
-        <Route path="/sign-up" element={usersCtx.isLoggedIn ? <UserProfile/> : <SignUp/>} />
-        {/* <Route path="/*" >Page Not Fount</Route> */}
+        <Route path="parks" element={<ParksList />}></Route>
+        <Route path="/sign-up" element={usersCtx.isLoggedIn ? <UserProfile /> : <SignUp />} />
+        {/* <Route path="*" element={<PageNotFound />} ></Route> */}
       </Routes>
     </div>
-   
+
   );
 }
 
