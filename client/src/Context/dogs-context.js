@@ -11,7 +11,7 @@ const DogsContextProvider = ({children}) => {
   const [editing, setEditing] = useState(false);
   const [showDeletePopUp, setShowDeletePopUp] = useState(false)
 
-  //להביא את הכלבים של היוזר
+  //fetch user's dogs
   useEffect(() => {
     if (usersCtx.user._id === undefined) {
       return;
@@ -23,7 +23,7 @@ const DogsContextProvider = ({children}) => {
     }, [usersCtx.user._id]);
 
 
-
+    //add the dogs to the array, show in the UI and then write to DB
   // להוסיף למערך וליואיי ואז פצ לדאטא בייס
   const addDogFunc = async (name, year_of_birth, weight, likes, dislike, owner) => {
     setDogs([{name, year_of_birth, weight, likes, dislike, owner, _id: ""}, ...dogs])
@@ -36,14 +36,14 @@ const DogsContextProvider = ({children}) => {
         body: JSON.stringify({name, year_of_birth, weight, likes, dislike, owner}),
       });
       const dogsNewDB = await respone.json();
-      // const _id = data.insertedId;
-       const dogsNew = [dogsNewDB, ...dogs]
+      const dogsNew = [dogsNewDB, ...dogs]
       setDogs(dogsNew);
     } catch (error) {
       // remove added dog
       dogs.shift()
       setDogs(dogs)
       console.log("Error: " + error)
+      //add a message to the user?
     } 
   };
 
@@ -55,7 +55,7 @@ const DogsContextProvider = ({children}) => {
     setShowDeletePopUp(true);
   }
 
-  // העלאת הפופ אפ של המחיקה
+  // show delete pop-up
   const deletePopUpHandler = () => {
     showPopUp();
   }

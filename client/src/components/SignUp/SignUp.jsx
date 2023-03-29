@@ -6,7 +6,7 @@ import { useUsersContext } from "../../Context/user-context"
 import { useNavigate, Link } from "react-router-dom"
 
 // reducerFunc => (prevState, action) [via dispatchFunc]
-// state - האחרון שנמצא שם, לא הראושני, כמו ביוז סטייס
+// state - האחרון שנמצא שם, לא הראשוני, כמו ביוז סטייס
 function reducerFunc(prevState, action) {
   switch (action.type) {
     case 'NAME_INPUT':

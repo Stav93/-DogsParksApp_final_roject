@@ -1,15 +1,14 @@
-import logo from './logo.svg';
+import { Routes, Route, Outlet } from "react-router-dom";
+import Login from "./components/Login/Login";
+import SignUp from "./components/SignUp/SignUp";
+import UserProfile from "./components/UserProfile/UserProfile";
+import MainHeader from "./components/UI/MainHeader/MainHeader";
+import DogsList from "./components/DogsList/DogsList";
+import ParksList from "./components/ParksList/ParksList";
+import UserParksList from "./components/UserParksList/UserParksList";
+import DogForm from "./components/DogForm/DogForm";
+import { useUsersContext } from "./Context/user-context";
 import './App.css';
-import Login from "./components/Login/Login"
-import SignUp from "./components/SignUp/SignUp"
-import UserProfile from "./components/UserProfile/UserProfile"
-import MainHeader from "./components/UI/MainHeader/MainHeader"
-import { useUsersContext } from "../src/Context/user-context"
-import { Routes, Route, Outlet } from "react-router-dom"
-import DogsList from "./components/DogsList/DogsList"
-import ParksList from "./components/ParksList/ParksList"
-import UserParksList from "./components/UserParksList/UserParksList"
-import DogForm from "./components/DogForm/DogForm"
 
 // function PageNotFound() {
 //   return <h1>Page Not Found</h1>
