@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo, useEffect } from "react"
+import React, { useState, useContext, useMemo, useCallback, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 
@@ -30,7 +30,7 @@ const UsersContextProvider = ({ children }) => {
     }
   }, [])
 
-  const loginHandler = async (email, password) => {
+  const loginHandler = useCallback(async (email, password) => {
     // לשלוח את השם והסיסמא לסרבר ולבדוק אם יש יוזר עם הסיסמא והמייל
     // אם כן הוא מחזיר אותו
     try {
@@ -59,7 +59,7 @@ const UsersContextProvider = ({ children }) => {
       }, 3000)
       // console.log("Error: " + error)
     }
-  }
+  }, []);
 
   const signUpHandler = async (name, email, city, password) => {
     try {
