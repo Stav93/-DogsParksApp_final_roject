@@ -1,6 +1,8 @@
 import React, { useState, useReducer, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../store/user-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"
+// import { login} from "../../store/user-actions";
+import { login, setMessage } from "../../store/user-slice";
 import Input from "../Input/input";
 import Button from "../UI/Button/Button";
 import classes from "./Login.module.css";
@@ -51,8 +53,10 @@ function reducerFunc(prevState, action) {
 function Login() {
   const usersCtx = useUsersContext();
   const [formIsValid, setFormIsValid] = useState(false);
+  const userData = useSelector((state) => state.user.user)
   const dispatch = useDispatch();
-  // const clickLogInHandler = useNavigate() ?????
+  const navigate = useNavigate();
+  const loginMessage = useSelector((state) => state.user.loginMessage)
 
   // USE_REDUCER
   // const [state, dispatchFunc] = useReducer(reducerFunc, initialState);
@@ -106,17 +110,23 @@ function Login() {
   // submit - login
   const submitHandler = async (event) => {
     event.preventDefault();
-    //using redux
     dispatch(
       login({
         email: state.emailState.value,
         password: state.passwordState.value,
       })
     );
-    // usersCtx.onLogin(state.emailState.value, state.passwordState.value);
-    // console.log(usersCtx.user.name)
-    // clickLogInHandler(`/profile/${usersCtx.user.name}`);
   };
+
+  useEffect(() => {
+    console.log(userData.name)
+    if (userData.name !== "") {
+      navigate(`/profile/${userData.name?.replace(/ /g, "")}`);
+    } else {
+      navigate('/login');
+    }
+  }, [userData])
+  
   return (
     <div>
       <h2>Log In</h2>
@@ -149,7 +159,7 @@ function Login() {
           >
             Login
           </Button>
-          {usersCtx.loginMessage && (
+          {loginMessage && (
             <p className={classes.loginMessage}>one or more is not correct</p>
           )}
           <div>

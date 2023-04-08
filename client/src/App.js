@@ -1,4 +1,5 @@
 import { Routes, Route, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import UserProfile from "./components/UserProfile/UserProfile";
@@ -16,12 +17,13 @@ import './App.css';
 
 function App() {
   const usersCtx = useUsersContext();
+  const userLogged = useSelector((state) => state.user.isLoggedIn)
   return (
     <div className="App main">
       <MainHeader />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/profile/:userName" element={usersCtx.isLoggedIn ? <UserProfile /> : <Login />}>
+        <Route path="/profile/:userName" element={userLogged ? <UserProfile /> : <Login />}>
           <Route path="dogs" element={<DogsList />}>
             <Route path="AddADog" element={<DogForm />}></Route>
           </Route>

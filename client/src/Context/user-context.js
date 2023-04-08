@@ -16,9 +16,6 @@ const UsersContextProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUserLoggedInInformaition = localStorage.getItem('isLoggedIn');
-    // אם אני לא מחוברת ללכת תלוגין אחרת כלום
-    // או אם לא עובד בהכל אז להשאיר ככה אלא פה יבדוק מה יש בראוט פט לוקיישן ולשים בנביגייט
-
 
     if (storedUserLoggedInInformaition !== null) {
       const userData = JSON.parse(storedUserLoggedInInformaition);
@@ -31,8 +28,6 @@ const UsersContextProvider = ({ children }) => {
   }, [])
 
   const loginHandler = useCallback(async (email, password) => {
-    // לשלוח את השם והסיסמא לסרבר ולבדוק אם יש יוזר עם הסיסמא והמייל
-    // אם כן הוא מחזיר אותו
     try {
       const respone = await fetch("/api/users/login",
         {

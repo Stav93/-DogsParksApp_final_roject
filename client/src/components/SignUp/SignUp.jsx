@@ -4,9 +4,10 @@ import Button from "../UI/Button/Button"
 import classes from "./SignUp.module.css"
 import { useUsersContext } from "../../Context/user-context"
 import { useNavigate, Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { signUp, setMessage } from "../../store/user-slice";
 
-// reducerFunc => (prevState, action) [via dispatchFunc]
-// state - האחרון שנמצא שם, לא הראשוני, כמו ביוז סטייס
+
 function reducerFunc(prevState, action) {
   switch (action.type) {
     case 'NAME_INPUT':
@@ -62,10 +63,11 @@ function reducerFunc(prevState, action) {
 function SignUp()  {
   const usersCtx = useUsersContext();
   const [formIsValid, setFormIsValid] = useState(false);
-  const clickSignUpHandler = useNavigate()
+  const userData = useSelector((state) => state.user.user)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const signupMessage = useSelector((state) => state.user.signupMessage)
 
-  // USE_REDUCER
-  // const [state, dispatchFunc] = useReducer(reducerFunc, initialState);
   const [state, dispatchFunc] = useReducer(reducerFunc, {
     nameState: {
       value: '', //state.nameState.value
@@ -105,7 +107,14 @@ function SignUp()  {
       setFormIsValid(
         nameIsValid && emailIsValid && cityIsValid && passwordIsValid
       );
+      // !formIsValid && dispatch(setMessage())
     }, 500)
+
+  //  const message = setTimeout(() => {
+  //     !formIsValid && dispatch(setMessage())
+  //   }, 5000)
+  //   clearTimeout(message);
+
     // מחזירים פונקציה אחת
     // cleanup function
     // תרוץ לפני שיוז אפקט תרוץ פעם הבאה
@@ -117,8 +126,7 @@ function SignUp()  {
   }, [nameIsValid, emailIsValid, cityIsValid, passwordIsValid]);
 
   // FormValidation
-  // פונקציות שמשתמשים בהן כדי לשלוח דרך הדיספאצ 
-  //  את האובייקט אקשן שבו יש טייפ ומה שנרצה עוד שישפיע על הסטייט החדש
+  //add a message once?
   const nameChangeHandler = (event) => {
     dispatchFunc({type: 'NAME_INPUT', val: event.target.value});
   };
@@ -132,24 +140,50 @@ function SignUp()  {
     dispatchFunc({type:"PASSWORD_INPUT", val: event.target.value});
   };
   const validateNameHandler = () => {
-    dispatchFunc({type: 'NAME_BLUR'});
+    dispatchFunc({ type: 'NAME_BLUR' });
+    dispatch(setMessage())
   };
   const validateEmailHandler = () => {
-    dispatchFunc({type: 'EMAIL_BLUR'});
+    dispatchFunc({ type: 'EMAIL_BLUR' });
+    dispatch(setMessage())
   };
   const validateCityHandler = () => {
-    dispatchFunc({type: 'CITY_BLUR'});
+    dispatchFunc({ type: 'CITY_BLUR' });
+    dispatch(setMessage())
   };
   const validatePasswordHandler = () => {
-    dispatchFunc({type: 'PASSWORD_BLUR'});
+    dispatchFunc({ type: 'PASSWORD_BLUR' });
+    dispatch(setMessage())
   };
 
   // submit - SignUp
   const submitHandler = async (event) => {
     event.preventDefault();
-    usersCtx.onSignUp(state.nameState.value, state.emailState.value, state.cityState.value, state.passwordState.value);
+    console.log(nameValue,
+      emailValue,
+      cityValue,
+      passwordValue,)
+    dispatch(
+      signUp({
+        name: nameValue,
+        email: emailValue,
+        city: cityValue,
+        password: passwordValue,
+      })
+    );
+    // usersCtx.onSignUp(state.nameState.value, state.emailState.value, state.cityState.value, state.passwordState.value);
     // clickSignUpHandler("/profile");
   }
+
+  useEffect(() => {
+    console.log(userData.name)
+    if (userData.name !== "") {
+      navigate(`/profile/${userData.name?.replace(/ /g, "")}`);
+    } else {
+      navigate('/sign-up');
+    }
+  }, [userData])
+
   return (
     <>
     <h2>Sign Up</h2>
@@ -198,7 +232,7 @@ function SignUp()  {
       <Button type="submit" className={classes.btn} disableBtn={!formIsValid}>
           SignUp
        </Button>
-       {usersCtx.signupMessage && <p className={classes.loginMessage}>please enter valid values</p>}
+       {signupMessage && <p className={classes.loginMessage}>please enter valid values</p>}
        <div>
         <span className={classes.signUp}><Link to="/login">login instead</Link></span> 
       </div>
