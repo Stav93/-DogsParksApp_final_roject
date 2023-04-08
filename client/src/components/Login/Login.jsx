@@ -1,4 +1,6 @@
 import React, { useState, useReducer, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/user-slice";
 import Input from "../Input/input";
 import Button from "../UI/Button/Button";
 import classes from "./Login.module.css";
@@ -49,6 +51,7 @@ function reducerFunc(prevState, action) {
 function Login() {
   const usersCtx = useUsersContext();
   const [formIsValid, setFormIsValid] = useState(false);
+  const dispatch = useDispatch();
   // const clickLogInHandler = useNavigate() ?????
 
   // USE_REDUCER
@@ -65,8 +68,8 @@ function Login() {
   });
 
   const { value: emailValue, isValid: emailIsValid } = state.emailState;
-  const { value: passwordValue, isValid: passwordIsValid } = state.passwordState;
-    
+  const { value: passwordValue, isValid: passwordIsValid } =
+    state.passwordState;
 
   useEffect(() => {
     // רוצים לנקות את הטיימר כל פעם שהיוזר סיים להקליד
@@ -103,7 +106,14 @@ function Login() {
   // submit - login
   const submitHandler = async (event) => {
     event.preventDefault();
-    usersCtx.onLogin(state.emailState.value, state.passwordState.value);
+    //using redux
+    dispatch(
+      login({
+        email: state.emailState.value,
+        password: state.passwordState.value,
+      })
+    );
+    // usersCtx.onLogin(state.emailState.value, state.passwordState.value);
     // console.log(usersCtx.user.name)
     // clickLogInHandler(`/profile/${usersCtx.user.name}`);
   };
