@@ -7,25 +7,25 @@ const DogsContext = React.createContext({});
 const DogsContextProvider = ({ children }) => {
   const usersCtx = useUsersContext();
   const [showForm, setShowForm] = useState(false);
-  // const [dogs, setDogs] = useState([]);
+  const [dogs, setDogs] = useState([]);
   const [dog, setDog] = useState("");
   const [editing, setEditing] = useState(false);
   const [showDeletePopUp, setShowDeletePopUp] = useState(false);
 
-  const { data: dogs } = useHttpData({
-    url: `/api/users/${usersCtx.user._id}/dogs`,
-  });
+  // const { data: dogs } = useHttpData({
+  //   url: `/api/users/${usersCtx.user._id}/dogs`,
+  // });
 
   //fetch user's dogs
-  // useEffect(() => {
-  //   if (usersCtx.user._id === undefined) {
-  //     return;
-  //   } else {
-  //     fetch(`/api/users/${usersCtx.user._id}/dogs`)
-  //       .then((response) => response.json())
-        // .then((data) => setDogs(data));
-  //   }
-  // }, [usersCtx.user._id]);
+  useEffect(() => {
+    if (usersCtx.user._id === undefined) {
+      return;
+    } else {
+      fetch(`/api/users/${usersCtx.user._id}/dogs`)
+        .then((response) => response.json())
+        .then((data) => setDogs(data));
+    }
+  }, [usersCtx.user._id]);
 
   //add the dogs to the array, show in the UI and then write to DB
   // להוסיף למערך וליואיי ואז פצ לדאטא בייס
