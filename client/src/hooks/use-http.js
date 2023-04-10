@@ -1,33 +1,14 @@
 import { useState, useCallback, useEffect } from "react";
+import { sendRequest } from "../services/api";
 
 export const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
 
-  const sendRequest = useCallback(
+  const sendRequestCB = useCallback(
     async ({ url, method = "GET", headers = {}, body = undefined }, onData) => {
       setIsLoading(true);
-      setError(undefined);
-      try {
-        const response = await fetch(url, {
-          method,
-          headers,
-          // body: body ? JSON.stringify(body) : null,
-          ...(body !== undefined && { body: JSON.stringify(body) }),
-        });
-
-        if (!response.ok) {
-          // throw new Error('Request failed!');
-          setError("Request failed!");
-          setIsLoading(false);
-          return;
-        }
-        //check response type - text or json
-        const data = await response.json();
-        onData(data);
-      } catch (err) {
-        setError(err.message || "Something went wrong!");
-      }
+      await sendRequest({ url, method, headers, body }, onData, setError);
       setIsLoading(false);
     },
     []
@@ -36,7 +17,7 @@ export const useHttp = () => {
   return {
     isLoading,
     error,
-    sendRequest,
+    sendRequest: sendRequestCB,
   };
 };
 

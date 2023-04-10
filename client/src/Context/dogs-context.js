@@ -1,10 +1,14 @@
 import React, { useMemo, useContext, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useUsersContext } from "../Context/user-context";
 import { useHttpData } from "../hooks/use-http";
 
 const DogsContext = React.createContext({});
 
 const DogsContextProvider = ({ children }) => {
+  const userId = useSelector((state) => state.user.user._id);
+  const dispatch = useDispatch();
+
   const usersCtx = useUsersContext();
   const [showForm, setShowForm] = useState(false);
   const [dogs, setDogs] = useState([]);
@@ -18,14 +22,16 @@ const DogsContextProvider = ({ children }) => {
 
   //fetch user's dogs
   useEffect(() => {
-    if (usersCtx.user._id === undefined) {
+    // console.log(user);
+    // console.log("id " + userId);
+    if (!userId) {
       return;
-    } else {
-      fetch(`/api/users/${usersCtx.user._id}/dogs`)
-        .then((response) => response.json())
-        .then((data) => setDogs(data));
     }
-  }, [usersCtx.user._id]);
+    fetch(`/api/users/${userId}/dogs`)
+      .then((response) => response.json())
+      .then((data) => setDogs(data))
+      .then(console.log(dogs));
+  }, [userId]);
 
   //add the dogs to the array, show in the UI and then write to DB
   // להוסיף למערך וליואיי ואז פצ לדאטא בייס
@@ -58,7 +64,7 @@ const DogsContextProvider = ({ children }) => {
       });
       const dogsNewDB = await respone.json();
       const dogsNew = [dogsNewDB, ...dogs];
-      // setDogs(dogsNew);
+      setDogs(dogsNew);
     } catch (error) {
       // remove added dog
       dogs.shift();
@@ -107,7 +113,7 @@ const DogsContextProvider = ({ children }) => {
         },
         body: JSON.stringify({ id }),
       });
-      // setDogs((prev) => prev.filter((dog) => dog._id !== id));
+      setDogs((prev) => prev.filter((dog) => dog._id !== id));
       console.log(dogs);
     } catch (error) {
       console.log("Error: " + error);
@@ -131,7 +137,7 @@ const DogsContextProvider = ({ children }) => {
   };
 
   const saveDogsAfterEdit = (dogs) => {
-    // setDogs(dogs);
+    setDogs(dogs);
   };
 
   const value = useMemo(

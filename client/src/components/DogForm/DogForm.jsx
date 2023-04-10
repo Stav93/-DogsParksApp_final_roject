@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useReducer} from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
+import { useSelector } from 'react-redux'
 import { useUsersContext } from "../../Context/user-context"
 import { useDogsContext } from "../../Context/dogs-context"
 import Button from "../UI/Button/Button"
@@ -54,6 +55,7 @@ function DogForm({hideForm}) {
   const [formIsValid, setFormIsValid] = useState(false);
   const usersCtx = useUsersContext();
   const dogsCtx = useDogsContext();
+  const userId = useSelector((state) => state.user.user._id)
 
   const [state, dispatchFunc] = useReducer(reducerFunc, {
     nameState: {
@@ -155,10 +157,11 @@ function DogForm({hideForm}) {
   }
 
   const submitHandler = async (event) => {
+    // console.log(userId)
     event.preventDefault();
     dogsCtx.hideFormFunc();;
     dogsCtx.editing ? saveEditingFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue,) :
-    dogsCtx.addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, usersCtx.user._id);
+    dogsCtx.addDogFunc(nameValue, yearOfBirthValue, weightValue, likesValue, dislikeValue, userId);
   
   }
 
