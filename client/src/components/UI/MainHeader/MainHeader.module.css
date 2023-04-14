@@ -20,10 +20,6 @@
 .main-header h1 {
   color: white;
 }
-/* .main-header div {
-  flex-direction: column;
-  align-self: flex-start;
-} */
 
 .main-header button {
   height: 2.5rem;

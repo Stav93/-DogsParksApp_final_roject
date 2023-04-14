@@ -2,10 +2,12 @@ import express from 'express';
 import "express-async-errors"
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import { fileURLToPath } from 'url';
+import dotenv from "dotenv";
 import { AppRouter } from './routes.mjs';
 import * as path from "path";
 import "./db.mjs"
-import { fileURLToPath } from 'url';
+
 
 
 const port = process.env.PORT || 3001;
@@ -15,6 +17,7 @@ const __dirname = path.dirname(__filename);
 export const app = express();
 
 app.listen(port);
+dotenv.config();
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());

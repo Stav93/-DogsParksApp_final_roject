@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Card from "../UI/Card/Card"
 import classes from "./Dog.module.css"
 import Modal from '../UI/Modal/Modal'

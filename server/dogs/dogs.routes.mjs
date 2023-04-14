@@ -1,6 +1,5 @@
 import {Router} from 'express';
 import { addDog, editDog, getAllDogs, getDogById, removeDog, getDogsByUserId } from './dogs.data.mjs';
-// import { getProductBySellerId } from '../products/products.data.mjs';
 
 export const DogsRouter = Router();
 
