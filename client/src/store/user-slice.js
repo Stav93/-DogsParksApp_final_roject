@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendRequest } from "../services/api";
+// import { sendRequest } from "../services/api";
 
 const noUser = {
   _id: "",
@@ -70,20 +70,20 @@ export const login = createAsyncThunk(
   "user/login",
   async ({ email, password }) => {
     //Todo: move to API folder (to user-actions?)
-    // const respone = await fetch("/api/users/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ email, password }),
-    // });
-
-    // const userData = await respone.json();
-    const userData = await sendRequest({
-      url: "/api/users/login",
+    const respone = await fetch("/api/users/login", {
       method: "POST",
-      body: {email, password},
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
     });
+
+    const userData = await respone.json();
+    // const userData = await sendRequest({
+    //   url: "/api/users/login",
+    //   method: "POST",
+    //   body: {email, password},
+    // });
     //to be removed
     localStorage.setItem("isLoggedIn", JSON.stringify(userData));
     return userData;

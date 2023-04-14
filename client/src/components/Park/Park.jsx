@@ -1,20 +1,20 @@
 import { useState , useEffect } from 'react'
+import { useSelector } from "react-redux"
+import { useUsersContext } from "../../Context/user-context"
 import Card from "../UI/Card/Card"
 import classes from "./Park.module.css"
-import Modal from '../UI/Modal/Modal'
-import Button from '../UI/Button/Button'
-import {useUsersContext} from "../../Context/user-context"
 
 function Park({_id, name, city, street, users, OnUpdateParks, index}) {
   const usersCtx = useUsersContext();
   const [like, setLike] = useState(false)
   const [likesCount, setLikesCount] = useState(0)
+  const userId = useSelector((state) => state.user.user._id)
 
   useEffect(() => {
     if (users) {
       setLikesCount(users.length);
       for (let i = 0; i < users.length; i++) {
-        if(users[i]._id === usersCtx.user._id) {
+        if(users[i]._id === userId) {
           setLike(true);
           break;
         }

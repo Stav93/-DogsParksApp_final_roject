@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/Stav93/-DogsParksApp_final_roject#readme",
   "dependencies": {
-    "concurrently": "^7.1.0"
+    "concurrently": "^7.1.0",
+    "mongodb": "^5.2.0"
   }
 }

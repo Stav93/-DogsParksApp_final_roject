@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Park from "../Park/Park"
 import classes from "../ParksList/ParksList.module.css"
-import { useLocation } from 'react-router-dom'
 
 function ParksList() {
   const [parks, setParks] = useState([])
   const [selectedCity, setSelectedCity] = useState("All")
-  const location = useLocation();
 
   useEffect(() => {
       fetch(`/api/parks`)
@@ -35,11 +33,9 @@ function ParksList() {
         } 
       })
       setParks(parksNew)
-      // setParks(parks[parkIndex].users = parks[parkIndex].users.filter(u => u._id !== user._id))
     }
   }
 
-  // בהתאם לתנאי ולקונטקסט - יראה את כל הפארקים והדרופ דאון או רק את הפארקים של היוזר
   return (
       <div className={classes.container}>
      <h1>All Parks</h1>

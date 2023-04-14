@@ -1,14 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useUsersContext } from "../../Context/user-context"
 import Park from "../Park/Park"
 import classes from "./UserParksList.module.css"
-import { useUsersContext } from "../../Context/user-context"
+
 
 function UserParksList() {
   const usersCtx = useUsersContext();
   const [parks, setParks] = useState([])
+  const userId = useSelector((state) => state.user.user._id)
 
   useEffect(() => {
-    fetch(`/api/users/${usersCtx.user._id}/parks`)
+    console.log(userId)
+    fetch(`/api/users/${userId}/parks`)
     .then(response => response.json())
     .then(data => setParks(data));
   }, []);

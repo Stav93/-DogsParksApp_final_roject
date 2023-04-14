@@ -1,13 +1,14 @@
 import React, { useMemo, useContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useUsersContext } from "../Context/user-context";
-import { useHttpData } from "../hooks/use-http";
+// import { useHttpData } from "../hooks/use-http";
 
 const DogsContext = React.createContext({});
 
 const DogsContextProvider = ({ children }) => {
   const userId = useSelector((state) => state.user.user._id);
-  const dispatch = useDispatch();
+  console.log(userId);
+  // const dispatch = useDispatch();
 
   const usersCtx = useUsersContext();
   const [showForm, setShowForm] = useState(false);
@@ -34,7 +35,6 @@ const DogsContextProvider = ({ children }) => {
   }, [userId]);
 
   //add the dogs to the array, show in the UI and then write to DB
-  // להוסיף למערך וליואיי ואז פצ לדאטא בייס
   const addDogFunc = async (
     name,
     year_of_birth,
