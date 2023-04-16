@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 // import { login} from "../../store/user-actions";
 import { login, setMessage } from "../../store/user-slice";
+import { fetchDogs } from "../../store/dogs-slice";
 import Input from "../Input/input";
 import Button from "../UI/Button/Button";
 import classes from "./Login.module.css";
@@ -116,10 +117,12 @@ function Login() {
         password: state.passwordState.value,
       })
     );
+    // dispatch(fetchDogs(userData._id))
   };
 
   useEffect(() => {
-    console.log(userData.name)
+    console.log("user :" + userData)
+    console.log("userName :" + userData.name)
     if (userData.name !== "") {
       navigate(`/profile/${userData.name?.replace(/ /g, "")}`);
     } else {

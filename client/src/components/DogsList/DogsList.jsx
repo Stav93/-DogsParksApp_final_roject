@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Dog from "../Dog/Dog"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDogs, addDogBtn } from "../../store/dogs-slice";
 import Button from "../UI/Button/Button"
-import classes from "./DogsList.module.css"
-import { useDogsContext } from "../../Context/dogs-context"
 import DogForm from '../DogForm/DogForm'
+import Dog from "../Dog/Dog"
+import classes from "./DogsList.module.css"
 
 function DogsList() {
-  const dogsCtx = useDogsContext();
+  const userId = useSelector((state) => state.user.user._id)
+  const userLogged = useSelector((state) => state.user.isLogged)
+  const dispatch = useDispatch();
+  const dogs = useSelector((state) => state.dogs.dogs)
+  const showForm = useSelector((state) => state.dogs.showForm)
 
+  useEffect(() => {
+    dispatch(fetchDogs(userId, userLogged))
+  }, [])
+  
+  
   return (
+   
     <div className={classes.dogs}>
-      {dogsCtx.dogs.map(dog => {
+       { console.log(dogs) }
+      {dogs.map(dog => {
         return (
           <Dog key={dog._id} {...dog}/>
         );
       })}
-      <Button onClick={dogsCtx.AddADogHandler} className={classes["bg-small"]} disableBtn={dogsCtx.showForm}>+Add A Dog</Button>
-      {dogsCtx.showForm && <DogForm hideForm={dogsCtx.hideFormFunc}/>}
+      <Button onClick={() => dispatch(addDogBtn())} className={classes["bg-small"]}
+        //ToDo - check this link: disableBtn={dogsCtx.showForm}
+        // disableBtn={showForm}
+      >+Add A Dog</Button>
+      {showForm && <DogForm/>}
     </div>
   )
 }

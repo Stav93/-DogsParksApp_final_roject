@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { userSlice } from "./user-slice"
 
 const noDog = {
   _id: "",
@@ -9,6 +10,8 @@ const noDog = {
   userId: "",
 };
 
+
+
 export const dogsSlice = createSlice({
   name: "dogs",
   initialState: {
@@ -17,30 +20,32 @@ export const dogsSlice = createSlice({
     showForm: false,
     editing: false,
     showDeletePopUp: false,
+
   },
   reducers: {
-    showPopUp: (state) => {
+    showDeleteDogPopUp: (state, action) => {
       state.showDeletePopUp = true;
+      state.dog = action.payload;
     },
-    hidePopUp: (state) => {
+    hideDeleteDogPopUp: (state) => {
       state.showDeletePopUp = false;
     },
     // show delete pop-up
     //check if needed
-    deletePopUpHandler: (state) => {
-      state.showDeletePopUp = false;
-    },
+    // deletePopUpHandler: (state) => {
+    //   state.showDeletePopUp = false;
+    // },
     //while the popup is visible - the dog we want to delete
-    deleteDogHandler: (state, action) => {
-      const dog = action.payload;
-      state.showDeletePopUp = true;
-    },
-    //clicking on the "add dog" button
-    addDog: (state) => {
+    // deleteDogHandler: (state, action) => {
+    //   state.dog = action.payload;
+    //   state.showDeletePopUp = true;
+    // },
+    //clicking on the "add dog" button in the dog list page
+    addDogBtn: (state) => {
       state.showForm = true;
     },
     editDog: (state, action) => {
-      const dog = action.payload;
+      state.dog = action.payload;
       state.showForm = true;
       state.editing = true;
     },
@@ -71,19 +76,21 @@ export const dogsSlice = createSlice({
       //delete a dog
       .addCase(deleteDog.pending, (state, action) => {})
       .addCase(deleteDog.fulfilled, (state, action) => {
+        state.showDeletePopUp = false;
         state.dog = action.payload;
         state.dogs = state.dogs.filter((d) => d._id !== state.dog._id);
       })
       .addCase(deleteDog.rejected, (state, action) => {
+        state.showDeletePopUp = false;
+        state.dog = action.payload;
+        console.log(state.dog)
         console.error("deleteDog: ", action.payload);
       })
       //edit a dog
       .addCase(saveEditDog.pending, (state, action) => {})
       .addCase(saveEditDog.fulfilled, (state, action) => {
         state.dog = action.payload;
-        const editedDog = state.dog;
-        state.dogs = state.dogs.map(dog => dog._id === state.dog._id ? state.dog : dog)
-        // state.dogs = state.dogs.map(dog => dog._id === editedDog._id ? editedDog : dog)
+        state.dogs = state.dogs.map(d => d._id === state.dog._id ? state.dog : d)
       })
       .addCase(saveEditDog.rejected, (state, action) => {
         console.error("saveEditDog: ", action.payload);
@@ -91,22 +98,20 @@ export const dogsSlice = createSlice({
   },
 });
 
-// state.dog = action.payload;
-// state.dogs = [...state.dogs, state.dog];
-
 //GET all user's dog(s)
-export const fetchDogs = createAsyncThunk("dogs/fetchDogs", async () => {
+export const fetchDogs = createAsyncThunk("dogs/fetchDogs", async (userId, userLogged) => {
   //Todo: move to API folder
-  if (state.user.isLoggedIn) {
-    const respone = await fetch(`/api/users/${state.user._id}/dogs`);
+  if (userLogged) {
+    const respone = await fetch(`/api/users/${userId}/dogs`);
     const dogsData = await respone.json();
     return dogsData;
   }
 });
 
+//ADD NEW DOG
 export const addDogtoDB = createAsyncThunk(
   "user/addDogtoDB",
-  async ({ name, year_of_birth, weight, likes, dislike, owner }) => {
+  async ({name, year_of_birth, weight, likes, dislike, owner }) => {
     //Todo: move to API folder
     const respone = await fetch("/api/dogs", {
       method: "POST",
@@ -130,9 +135,9 @@ export const addDogtoDB = createAsyncThunk(
 
 export const saveEditDog = createAsyncThunk(
   "user/saveEditDog",
-  async ({ name, year_of_birth, weight, likes, dislike }) => {
+  async ({ _id, name, year_of_birth, weight, likes, dislike } ) => {
     //Todo: move to API folder
-    const respone = await fetch(`/api/dogs/${state.user._id}`, {
+    const respone = await fetch(`/api/dogs/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -145,10 +150,11 @@ export const saveEditDog = createAsyncThunk(
   }
 );
 
-export const deleteDog = createAsyncThunk("user/deleteDog", async ({ id }) => {
+export const deleteDog = createAsyncThunk("user/deleteDog", async ( id ) => {
   //Todo: move to API folder
-  const dogId = id;
-  const respone = await fetch(`/api/dogs/${id}`, {
+  const dogId = id._id
+  console.log(dogId)
+  const respone = await fetch(`/api/dogs/${dogId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -156,16 +162,16 @@ export const deleteDog = createAsyncThunk("user/deleteDog", async ({ id }) => {
     body: JSON.stringify({ dogId }),
   });
 
-  const dog = await respone.json();
-  return dog;
+  const deletedDog = await respone.json();
+  return deletedDog;
 });
 
 export const {
-  showPopUp,
-  hidePopUp,
+  showDeleteDogPopUp,
+  hideDeleteDogPopUp,
   deletePopUpHandler,
   deleteDogHandler,
-  addDog,
+  addDogBtn,
   editDog,
   hideForm,
 } = dogsSlice.actions;

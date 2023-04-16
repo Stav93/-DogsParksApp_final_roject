@@ -101,24 +101,24 @@ const DogsContextProvider = ({ children }) => {
   };
 
   // בלחיצה על מחיקה בתוך הפופאפ
-  const deleteDogFinal = async () => {
-    console.log(dog);
-    const id = dog._id;
-    setShowDeletePopUp(false);
-    try {
-      const respone = await fetch(`/api/dogs/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-      setDogs((prev) => prev.filter((dog) => dog._id !== id));
-      console.log(dogs);
-    } catch (error) {
-      console.log("Error: " + error);
-    }
-  };
+  // const deleteDogFinal = async () => {
+  //   console.log(dog);
+  //   const id = dog._id;
+  //   setShowDeletePopUp(false);
+  //   try {
+  //     const respone = await fetch(`/api/dogs/${id}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ id }),
+  //     });
+  //     setDogs((prev) => prev.filter((dog) => dog._id !== id));
+  //     console.log(dogs);
+  //   } catch (error) {
+  //     console.log("Error: " + error);
+  //   }
+  // };
 
   const AddADogHandler = () => {
     setShowForm(true);
@@ -150,7 +150,7 @@ const DogsContextProvider = ({ children }) => {
       showDeletePopUp,
       hidePopUp,
       deleteDogHandler,
-      deleteDogFinal,
+      // deleteDogFinal,
       hideFormFunc,
       EditDogFunc,
       saveDogsAfterEdit,
@@ -163,7 +163,7 @@ const DogsContextProvider = ({ children }) => {
       addDogFunc,
       AddADogHandler,
       deletePopUpHandler,
-      deleteDogFinal,
+      // deleteDogFinal,
       showDeletePopUp,
       hidePopUp,
       deleteDogHandler,

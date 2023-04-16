@@ -86,7 +86,9 @@ export const login = createAsyncThunk(
     // });
     //to be removed
     localStorage.setItem("isLoggedIn", JSON.stringify(userData));
+    console.log(userData)
     return userData;
+   
   }
 );
 
