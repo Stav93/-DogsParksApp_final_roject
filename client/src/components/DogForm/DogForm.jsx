@@ -1,16 +1,10 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  showPopUp,
-  hidePopUp,
-  deletePopUpHandler,
-  deleteDogHandler,
   addDogtoDB,
-  editDog,
   hideForm,
   saveEditDog,
 } from "../../store/dogs-slice";
-import { useDogsContext } from "../../Context/dogs-context";
 import Button from "../UI/Button/Button";
 import classes from "./DogForm.module.css";
 import Input from "../Input/input";
@@ -68,7 +62,6 @@ function reducerFunc(prevState, action) {
 function DogForm() {
   const [message, setMessage] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
-  const dogsCtx = useDogsContext();
   const userId = useSelector((state) => state.user.user._id);
   const dog = useSelector((state) => state.dogs.dog);
   const dogId = useSelector((state) => state.dogs.dog._id);

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { deleteDog } from "./../../store/dogs-slice";
 import {
   showDeleteDogPopUp,
   hideDeleteDogPopUp,
@@ -8,25 +9,18 @@ import Card from "../UI/Card/Card";
 import classes from "./Dog.module.css";
 import Modal from "../UI/Modal/Modal";
 import Button from "../UI/Button/Button";
-import { useDogsContext } from "../../Context/dogs-context";
-import { deleteDog } from './../../store/dogs-slice';
 
 function Dog({ _id, name, year_of_birth, weight, likes, dislike }) {
-  const dogsCtx = useDogsContext();
   const dispatch = useDispatch();
   const showDeletePopUp = useSelector((state) => state.dogs.showDeletePopUp);
   const dogId = useSelector((state) => state.dogs.dog._id);
-  const currentDog = useSelector((state) => state.dogs.dog)
 
   const editDogHandler = () => {
     // update the dog state -> state.dogs.dog
     dispatch(editDog({ _id, name, year_of_birth, weight, likes, dislike }));
   };
 
-  // לחיצה על מחיקה בתוך הפופ אפ
-  // const deletePopUpHelper = () => {};
-
-  // העלאת הפופ אפ ושליחת פרטי הכלב לקונטקסט
+  // show delete dog pop up
   const dogDeletePopUp = () => {
     dispatch(
       showDeleteDogPopUp({
@@ -44,23 +38,26 @@ function Dog({ _id, name, year_of_birth, weight, likes, dislike }) {
     dispatch(hideDeleteDogPopUp());
   };
 
+  //delete a dog
   const deleteDogHandler = () => {
     dispatch(deleteDog(dogId));
-  }
+  };
 
   return (
     <div className={classes.dog}>
       {showDeletePopUp && (
         <Modal onClose={hideDeleteDogPopUpHansler}>
-          <h3>Are you sure you want to delete this dog?</h3>
-          <Button
-            className={`${classes.btn} ${classes.btnDog}`}
-            onClick={deleteDogHandler}
-          >
-            {" "}
-            Delete
-          </Button>
-          <a onClick={hideDeleteDogPopUpHansler}>cancle</a>
+          <div className={classes.deletePopUp}>
+            <h3>Are you sure you want to delete this dog?</h3>
+            <Button
+              className={`${classes.btn} ${classes.btnDog}`}
+              onClick={deleteDogHandler}
+            >
+              {" "}
+              Delete
+            </Button>
+            <a onClick={hideDeleteDogPopUpHansler}>cancle</a>
+          </div>
         </Modal>
       )}
       <Card>
