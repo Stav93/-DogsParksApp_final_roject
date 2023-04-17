@@ -15,7 +15,8 @@ function Dog({ _id, name, year_of_birth, weight, likes, dislike }) {
   const dogsCtx = useDogsContext();
   const dispatch = useDispatch();
   const showDeletePopUp = useSelector((state) => state.dogs.showDeletePopUp);
-  const dogId = useSelector((state) => state.dogs.dog);
+  const dogId = useSelector((state) => state.dogs.dog._id);
+  const currentDog = useSelector((state) => state.dogs.dog)
 
   const editDogHandler = () => {
     // update the dog state -> state.dogs.dog
@@ -44,7 +45,6 @@ function Dog({ _id, name, year_of_birth, weight, likes, dislike }) {
   };
 
   const deleteDogHandler = () => {
-    console.log(dogId)
     dispatch(deleteDog(dogId));
   }
 

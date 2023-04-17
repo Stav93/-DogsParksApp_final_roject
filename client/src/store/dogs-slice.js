@@ -77,7 +77,7 @@ export const dogsSlice = createSlice({
       .addCase(deleteDog.pending, (state, action) => {})
       .addCase(deleteDog.fulfilled, (state, action) => {
         state.showDeletePopUp = false;
-        state.dog = action.payload;
+        state.dog._id = action.payload;
         state.dogs = state.dogs.filter((d) => d._id !== state.dog._id);
       })
       .addCase(deleteDog.rejected, (state, action) => {
@@ -152,18 +152,15 @@ export const saveEditDog = createAsyncThunk(
 
 export const deleteDog = createAsyncThunk("user/deleteDog", async ( id ) => {
   //Todo: move to API folder
-  const dogId = id._id
-  console.log(dogId)
-  const respone = await fetch(`/api/dogs/${dogId}`, {
+  console.log(id)
+  const respone = await fetch(`/api/dogs/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ dogId }),
+    body: JSON.stringify({ id }),
   });
-
-  const deletedDog = await respone.json();
-  return deletedDog;
+  return id;
 });
 
 export const {
