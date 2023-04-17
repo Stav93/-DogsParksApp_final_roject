@@ -1,40 +1,49 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchParks } from "../../store/parks-slice"
 import Park from "../Park/Park"
 import classes from "../ParksList/ParksList.module.css"
 
 function ParksList() {
-  const [parks, setParks] = useState([])
+  // const [parks, setParks] = useState([])
   const [selectedCity, setSelectedCity] = useState("All")
 
+  const parks = useSelector((state) => state.parks.parks)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-      fetch(`/api/parks`)
-      .then(response => response.json())
-      .then(data => setParks(data));
+      dispatch(fetchParks())
   }, []);
 
-  const updateParks = (parkIndex, user, isLike) => {
-    if(isLike) {
-      // setParks(parks[parkIndex].users.push(user));
-      const parksNew = parks.map((park ,index) => {
-        if(index !== parkIndex) return park; 
-          else {
-            park.users.push(user);
-            return park;
-          } 
-      })
-      setParks(parksNew)
-    } else {
-      const parksNew = parks.map((park ,index) => {
-        if(index !== parkIndex) return park; 
-        else {
-          let usersArr = park.users.filter(u => u._id !== user._id);
-          park.users = usersArr;
-          return park;
-        } 
-      })
-      setParks(parksNew)
-    }
-  }
+  // useEffect(() => {
+  //     fetch(`/api/parks`)
+  //     .then(response => response.json())
+  //     .then(data => setParks(data));
+  // }, []);
+
+  // const updateParks = (parkIndex, user, isLike) => {
+  //   if(isLike) {
+  //     // setParks(parks[parkIndex].users.push(user));
+  //     const parksNew = parks.map((park ,index) => {
+  //       if(index !== parkIndex) return park; 
+  //         else {
+  //           park.users.push(user);
+  //           return park;
+  //         } 
+  //     })
+  //     setParks(parksNew)
+  //   } else {
+  //     const parksNew = parks.map((park ,index) => {
+  //       if(index !== parkIndex) return park; 
+  //       else {
+  //         let usersArr = park.users.filter(u => u._id !== user._id);
+  //         park.users = usersArr;
+  //         return park;
+  //       } 
+  //     })
+  //     setParks(parksNew)
+  //   }
+  // }
 
   return (
       <div className={classes.container}>
@@ -50,16 +59,17 @@ function ParksList() {
       </select>
      </div>
      <div className={classes.parks}>
-       {console.log(selectedCity)}
       {selectedCity === "All" ? parks.map((park, index) => {
         return (
-          <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks} />
+          <Park key={park._id} index={index} {...park}  />
+          // <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks} />
         );
       }) :
       parks.filter(park => park.city === selectedCity)
         .map((park, index) => {
         return (
-          <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks}/>
+          <Park key={park._id} index={index} {...park} />
+          // <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks}/>
         );
       })
       }
