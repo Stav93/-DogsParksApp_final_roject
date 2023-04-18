@@ -26,6 +26,9 @@ app.use(express.static("./build/index.html"))
 
 app.use('/api', AppRouter);
 
+app.get('*/*', (req, res) => {
+  res.sendFile(path.join(__dirname, './build/index.html'))
+})
 // app.get('*/*', (req, res) => {
 //   res.sendFile(path.join(__dirname, '../client/build/index.html'))
 // })
