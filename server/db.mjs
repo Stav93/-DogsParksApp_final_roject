@@ -6,21 +6,8 @@ import {mongoose} from 'mongoose'
 // mongoose.connect(db);
 
 
-// mongoose.connect("mongodb+srv://admin:Stav1993@cluster0.pu0gb.mongodb.net/?retryWrites=true&w=majority");
 
-export const db = () => {
-  const connectionParams = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-  try {
-    mongoose.connect("mongodb+srv://admin:Stav1993@cluster0.pu0gb.mongodb.net/?retryWrites=true&w=majority")
-    console.log("connect")
-  } catch (error) {
-    console.log("error: " + error)
-  }
-  
-}
+mongoose.connect("mongodb+srv://admin:Stav1993@cluster0.pu0gb.mongodb.net/DogsParkApp");
 
 
 
