@@ -21,14 +21,14 @@ app.listen(port);
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use(express.static("./build/index.html"))
+// app.use(express.static("./build/index.html"))
 // app.use(express.static("../client/build"))
 
 app.use('/api', AppRouter);
 
-// app.get('*/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, './build/index.html'))
-// })
+app.get('*/*', (req, res) => {
+  res.sendFile(path.join(__dirname, './build/index.html'))
+})
 // app.get('*/*', (req, res) => {
 //   res.sendFile(path.join(__dirname, '../client/build/index.html'))
 // })
