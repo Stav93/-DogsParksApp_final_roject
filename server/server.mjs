@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 // import dotenv from "dotenv";
 import { AppRouter } from './routes.mjs';
 import * as path from "path";
+// import  connectDB  from"./db.mjs"
 import "./db.mjs"
 
 
@@ -18,6 +19,7 @@ export const app = express();
 
 app.listen(port);
 // dotenv.config();
+// connectDB();
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
