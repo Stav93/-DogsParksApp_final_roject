@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { userSlice } from "./user-slice"
 
 const noDog = {
   _id: "",
