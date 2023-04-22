@@ -16,7 +16,10 @@ export async function getParksByUserId(userId) {
 
 export async function addUserLike(parkId, userId) {
     const park = await getParkById(parkId);
-    if(!park.users) park.users = [];
+    if (!park.users) park.users = [];
+    if (park.users.includes(userId)) {
+        return
+    }
     console.log("before " + park.users)
     park.users.push(userId);  
     console.log("after " + park.users)

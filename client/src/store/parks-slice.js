@@ -18,16 +18,11 @@ export const parksSlice = createSlice({
   },
   reducers: {
     updatePark: (state, action) => {
-      state.park = action.payload
-    }
-    // addLike: (state) => {
-    //   state.userLike = true;
-    //   state.totalParkLikes++;
-    // },
-    // removeLike: (state) => {
-    //   state.userLike = false;
-    //   state.totalParkLikes--;
-    // },
+      state.park = action.payload;
+     },
+    updateUserLike: (state) => {
+      state.userLike = true;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -43,6 +38,7 @@ export const parksSlice = createSlice({
       .addCase(userParks.pending, (state, action) => {})
       .addCase(userParks.fulfilled, (state, action) => {
         state.parks = action.payload;
+        console.log(state.parks)
       })
       .addCase(userParks.rejected, (state, action) => {
         console.error("userParks: ", action.payload);
@@ -51,6 +47,7 @@ export const parksSlice = createSlice({
       .addCase(addLike.pending, (state, action) => {})
       .addCase(addLike.fulfilled, (state, action) => {
         state.park = action.payload;
+        console.log(state.park);
         state.userLike = true;
       })
       .addCase(addLike.rejected, (state, action) => {
@@ -59,14 +56,11 @@ export const parksSlice = createSlice({
       //remove like - update park's like(s)
       .addCase(removeLike.pending, (state, action) => {})
       .addCase(removeLike.fulfilled, (state, action) => {
-        // state.park = action.payload;
         state.userLike = false;
         state.park = action.payload.data;
+        console.log(state.park);
         const userId = action.payload.userId;
-        // console.log(state.park);
-        // console.log(userId)
-        console.log(state.park.users)
-        // state.park.users.filter(user => user._id !== userId)
+        console.log(state.park.users);
       })
       .addCase(removeLike.rejected, (state, action) => {
         console.error("removeLike: ", action.payload);
@@ -88,38 +82,42 @@ export const userParks = createAsyncThunk("dogs/userParks", async (id) => {
   const respone = await fetch(`/api/users/${id}/parks`);
   const parksData = await respone.json();
   return parksData;
-
 });
 
-export const addLike = createAsyncThunk("dogs/addLike", async ({ userId, parkId }) => {
-  console.log({ parkId } )
-  //Todo: move to API folder
-  const respone = await fetch(`/api/parks/${parkId}/like`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ userId }),
-  });
-  const data = await respone.json();
-  console.log(data)
-});
+export const addLike = createAsyncThunk(
+  "dogs/addLike",
+  async ({ userId, parkId }) => {
+    console.log({ parkId });
+    //Todo: move to API folder
+    const respone = await fetch(`/api/parks/${parkId}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+    const data = await respone.json();
+    return data;
+  }
+);
 
-export const removeLike = createAsyncThunk("dogs/removeLike", async ({ userId, parkId }) => {
-  console.log({ parkId } )
-  //Todo: move to API folder
-  const respone = await fetch(`/api/parks/${parkId}/dislike`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ userId }),
-  });
-  const data = await respone.json();
-  return { data, userId };
-});
+export const removeLike = createAsyncThunk(
+  "dogs/removeLike",
+  async ({ userId, parkId }) => {
+    console.log({ parkId });
+    //Todo: move to API folder
+    const respone = await fetch(`/api/parks/${parkId}/dislike`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+    const data = await respone.json();
+    return { data, userId };
+  }
+);
 
-
-export const { updatePark } = parksSlice.actions;
+export const { updatePark, updateUserLike, updateParks } = parksSlice.actions;
 
 export default parksSlice.reducer;

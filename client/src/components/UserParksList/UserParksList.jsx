@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { userParks } from "../../store/parks-slice"
+import { userParks, updateParks } from "../../store/parks-slice"
 import { useUsersContext } from "../../Context/user-context"
 import Park from "../Park/Park"
 import classes from "./UserParksList.module.css"
@@ -8,22 +8,19 @@ import classes from "./UserParksList.module.css"
 
 function UserParksList() {
   const usersCtx = useUsersContext();
-  // const [parks, setParks] = useState([])
   const userId = useSelector((state) => state.user.user._id)
 
   const parks = useSelector((state) => state.parks.parks)
+  const park = useSelector((state) => state.parks.park)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-   dispatch(userParks(userId))
-  }, []);
+  console.log(parks)
 
-  // useEffect(() => {
-  //   console.log(userId)
-  //   fetch(`/api/users/${userId}/parks`)
-  //   .then(response => response.json())
-  //   .then(data => setParks(data));
-  // }, []);
+  useEffect(() => {
+    dispatch(userParks(userId))
+  }, [park.users]);
+
+  //parks.park.users
 
   // const updateParks = (parkIndex, user, isLike) => {
   //   if(isLike) {
