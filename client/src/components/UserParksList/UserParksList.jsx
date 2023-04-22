@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { userParks, updateParks } from "../../store/parks-slice"
+import { getUserParks, updateParks } from "../../store/parks-slice"
 import { useUsersContext } from "../../Context/user-context"
 import Park from "../Park/Park"
 import classes from "./UserParksList.module.css"
@@ -11,14 +11,17 @@ function UserParksList() {
   const userId = useSelector((state) => state.user.user._id)
 
   const parks = useSelector((state) => state.parks.parks)
-  const park = useSelector((state) => state.parks.park)
+  const usersParks = useSelector((state) => state.parks.usersParks)
   const dispatch = useDispatch()
+
+  
 
   console.log(parks)
 
   useEffect(() => {
-    dispatch(userParks(userId))
-  }, [park.users]);
+    dispatch(getUserParks(userId))
+    // console.log(park)
+  }, []);
 
   //parks.park.users
 
@@ -49,7 +52,7 @@ function UserParksList() {
       
   return (   
     <div className={classes.parks}>
-      {parks.map((park, index) => {
+      {usersParks.map((park, index) => {
         return (
           <Park key={park._id} index={index} {...park} />
           // <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks} />

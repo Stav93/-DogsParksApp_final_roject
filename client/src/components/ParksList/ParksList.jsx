@@ -14,7 +14,6 @@ function ParksList() {
   useEffect(() => {
     dispatch(fetchParks());
   }, []);
-  //parks.park.users
 
   const filterByCity = ({ city }) => {
     if (selectedCity === "All") {

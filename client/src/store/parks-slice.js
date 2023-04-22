@@ -13,6 +13,7 @@ export const parksSlice = createSlice({
   initialState: {
     park: noPark,
     parks: [],
+    usersParks: [],
     userLike: false,
     totalParkLikes: 0,
   },
@@ -35,18 +36,19 @@ export const parksSlice = createSlice({
         console.error("fetchParks: ", action.payload);
       })
       //GET user's park(s)
-      .addCase(userParks.pending, (state, action) => {})
-      .addCase(userParks.fulfilled, (state, action) => {
-        state.parks = action.payload;
-        console.log(state.parks)
+      .addCase(getUserParks.pending, (state, action) => {})
+      .addCase(getUserParks.fulfilled, (state, action) => {
+        state.usersParks = action.payload;
+        console.log(state.usersParks)
       })
-      .addCase(userParks.rejected, (state, action) => {
+      .addCase(getUserParks.rejected, (state, action) => {
         console.error("userParks: ", action.payload);
       })
       //add like - update park's like(s)
       .addCase(addLike.pending, (state, action) => {})
       .addCase(addLike.fulfilled, (state, action) => {
         state.park = action.payload;
+        state.usersParks = [...state.usersParks, state.park ];
         console.log(state.park);
         state.userLike = true;
       })
@@ -58,6 +60,7 @@ export const parksSlice = createSlice({
       .addCase(removeLike.fulfilled, (state, action) => {
         state.userLike = false;
         state.park = action.payload.data;
+        state.usersParks = state.usersParks.filter((p) => p._id !== state.park._id);
         console.log(state.park);
         const userId = action.payload.userId;
         console.log(state.park.users);
@@ -69,7 +72,7 @@ export const parksSlice = createSlice({
 });
 
 //GET all parks
-export const fetchParks = createAsyncThunk("dogs/fetchParks", async () => {
+export const fetchParks = createAsyncThunk("parks/fetchParks", async () => {
   //Todo: move to API folder
   const respone = await fetch(`/api/parks`);
   const parksData = await respone.json();
@@ -77,7 +80,7 @@ export const fetchParks = createAsyncThunk("dogs/fetchParks", async () => {
 });
 
 //GET user's park(s)
-export const userParks = createAsyncThunk("dogs/userParks", async (id) => {
+export const getUserParks = createAsyncThunk("parks/userParks", async (id) => {
   //Todo: move to API folder
   const respone = await fetch(`/api/users/${id}/parks`);
   const parksData = await respone.json();
@@ -85,7 +88,7 @@ export const userParks = createAsyncThunk("dogs/userParks", async (id) => {
 });
 
 export const addLike = createAsyncThunk(
-  "dogs/addLike",
+  "parks/addLike",
   async ({ userId, parkId }) => {
     console.log({ parkId });
     //Todo: move to API folder
@@ -102,7 +105,7 @@ export const addLike = createAsyncThunk(
 );
 
 export const removeLike = createAsyncThunk(
-  "dogs/removeLike",
+  "parks/removeLike",
   async ({ userId, parkId }) => {
     console.log({ parkId });
     //Todo: move to API folder

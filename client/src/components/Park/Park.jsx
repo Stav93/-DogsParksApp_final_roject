@@ -23,7 +23,7 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
 
   useEffect(() => {
     dispatch(updatePark({ _id, name, city, street, users }));
-  }, []);
+  }, [users]);
 
   const updateLikesHandler = () => {
     if (userLike) {
@@ -33,6 +33,9 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
     } else
       dispatch(addLike({ userId, parkId }));
   };
+  
+  const user = park.users.find(user => user._id === userId)
+  
 
   // const updateLikesHandler = () => {
   //   const user = park.users.find(user => user._id === userId)
@@ -99,10 +102,11 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
         <h3>street: {street}</h3>
         <button className={classes.like} onClick={updateLikesHandler}>
           {/* {park.users.includes(user) ? "unlike" : "like"} ({likesCount}) */}
-          {"like/unlike"} ({likesCount})
-          {/* {like ? "unlike" : "like"} ({likesCount}) */}
+          {/* {"like/unlike"} ({likesCount}) */}
+          {userLike ? "unlike" : "like"} ({likesCount})
         </button>
         {/* <button className={classes.like} onClick={likesHandler} >{like ? "unlike" : "Like"} ({likesCount})</button> */}
+        {console.log(park.users.includes(user))}
       </Card>
     </div>
   );
