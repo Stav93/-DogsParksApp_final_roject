@@ -1,112 +1,86 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addLike, removeLike, updatePark, updateUserLike } from "../../store/parks-slice";
+import {
+  addLike,
+  removeLike,
+  updatePark,
+  updateUserLike,
+} from "../../store/parks-slice";
 import { useUsersContext } from "../../Context/user-context";
 import Card from "../UI/Card/Card";
 import classes from "./Park.module.css";
 
-function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
+function Park({
+  _id,
+  name,
+  city,
+  street,
+  users,
+  userLike,
+  OnUpdateParks,
+  index,
+}) {
   const usersCtx = useUsersContext();
   const [like, setLike] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [btnContent, setBtnContent] = useState("");
 
   const userId = useSelector((state) => state.user.user._id);
-  const userLike = useSelector((state) => state.parks.userLike);
   const totalLikes = useSelector((state) => state.parks.totalLikes);
-  // const park = useSelector((state) => state.parks.park);
-  // const user = useSelector((state) => state.user.user)
-  const park = useSelector((state) => state.parks.park);
+  const user = useSelector((state) => state.user.user);
+  const park = {
+    _id,
+    name,
+    city,
+    street,
+    users,
+    OnUpdateParks,
+    index,
+  };
   const parkId = _id;
+
+  const parks = useSelector((state) => state.parks.parks);
+  const usersParks = useSelector((state) => state.usersParks);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(updatePark({ _id, name, city, street, users }));
-  }, [users]);
+  }, [parks, usersParks]);
 
   const updateLikesHandler = () => {
-    if (userLike) {
-      dispatch(
-        removeLike({ userId, parkId })
-      );
-    } else
+    if (user && users &&  users.some(user => user._id === userId)) {
+      dispatch(removeLike({ userId, parkId }));
+    } else {
       dispatch(addLike({ userId, parkId }));
+    }
   };
-  
-  const user = park.users.find(user => user._id === userId)
-  
-
-  // const updateLikesHandler = () => {
-  //   const user = park.users.find(user => user._id === userId)
-  //   console.log(user)
-  //    console.log(park.users.includes(user.Id))
-  //   if (park.users && park.users.includes(user)) {
-  //     dispatch(
-  //       removeLike({ userId, parkId })
-  //     );
-  //   } else
-  //     dispatch(addLike({ userId, parkId }));
-  // };
 
   // useEffect(() => {
-  //   const user = park.users.find((user) => user._id === userId);
-  //   if (park.users.includes(user)) {
-  //     setLike(true)
-  //   } 
-  // }, [park]);
-
-  // {/* {console.log(park.users.find((user) => user._id === userId))}
-
-  // useEffect(() => {
-  //   const user = park.users.find((user) => user._id === userId);
-  //   if (park.users.includes(user)) {
-  //     console.log("entered");
-  //     setLike(true)
-  //   }
-  // }, [park]);
-
-  // useEffect(() => {
-  //   if (users) {
-  //     setLikesCount(users.length);
-  //     for (let i = 0; i < users.length; i++) {
-  //       if (users[i]._id === userId) {
-  //         setLike(true);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }, [users]);
-
-  // const likesHandler = () => {
-  //   if (!like) {
-  //     usersCtx.onUserLike(_id);
-  //     // users.push(usersCtx.user)
-  //     OnUpdateParks(index, usersCtx.user, true);
-  //     setLikesCount((prev) => prev + 1);
-  //     setLike(true);
+  //   if (user && users && users.some(user => user._id === userId)) {
+  //     setBtnContent("unlike")
   //   } else {
-  //     usersCtx.onUserUnlike(_id);
-  //     // users = users.filter(user => user._id !==  usersCtx.user._id)
-  //     OnUpdateParks(index, usersCtx.user, false);
-  //     setLikesCount((prev) => prev - 1);
-  //     setLike(false);
+  //     setBtnContent("like")
   //   }
-  // };
+  // },[park])
 
   return (
     <div className={classes.park}>
       <Card>
+        {console.log("parkId", parkId)} 
+        {console.log("users", users)}
+        {console.log("user", user)}
+        {/* {user && users && console.log( users.includes(user))}  */}
+        {user && users && console.log( users.some(user => user._id === userId))} 
+        {/* {console.log(users.includes(user))}  */}
+        {/* {console.log(users.includes(user => user._id === userId))}  */}
         <label>{name}</label>
         <h3>City: {city}</h3>
         <h3>street: {street}</h3>
-        <button className={classes.like} onClick={updateLikesHandler}>
-          {/* {park.users.includes(user) ? "unlike" : "like"} ({likesCount}) */}
-          {/* {"like/unlike"} ({likesCount}) */}
-          {userLike ? "unlike" : "like"} ({likesCount})
+          <button className={classes.like} onClick={updateLikesHandler}>
+          {/* {btnContent} ({likesCount}) */}
+          {user && users && users.some(user => user._id === userId)  ? "unlike" : "like"} ({likesCount})
         </button>
-        {/* <button className={classes.like} onClick={likesHandler} >{like ? "unlike" : "Like"} ({likesCount})</button> */}
-        {console.log(park.users.includes(user))}
       </Card>
     </div>
   );

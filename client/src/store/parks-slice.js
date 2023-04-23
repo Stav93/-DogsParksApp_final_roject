@@ -21,9 +21,9 @@ export const parksSlice = createSlice({
     updatePark: (state, action) => {
       state.park = action.payload;
      },
-    updateUserLike: (state) => {
-      state.userLike = true;
-    },
+    // updateUserLike: (state) => {
+    //   state.userLike = true;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -48,8 +48,6 @@ export const parksSlice = createSlice({
       .addCase(addLike.pending, (state, action) => {})
       .addCase(addLike.fulfilled, (state, action) => {
         state.park = action.payload;
-        state.usersParks = [...state.usersParks, state.park ];
-        console.log(state.park);
         state.userLike = true;
       })
       .addCase(addLike.rejected, (state, action) => {
@@ -61,9 +59,7 @@ export const parksSlice = createSlice({
         state.userLike = false;
         state.park = action.payload.data;
         state.usersParks = state.usersParks.filter((p) => p._id !== state.park._id);
-        console.log(state.park);
         const userId = action.payload.userId;
-        console.log(state.park.users);
       })
       .addCase(removeLike.rejected, (state, action) => {
         console.error("removeLike: ", action.payload);
