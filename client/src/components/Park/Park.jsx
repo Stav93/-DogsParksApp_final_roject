@@ -52,7 +52,10 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
         <h3>City: {city}</h3>
         <h3>street: {street}</h3>
         <button className={classes.like} onClick={updateLikesHandler}>
-          {users && users.some(user => user._id === userId)  ? "unlike" : "like"} ({likesCount})
+          {users && users.some(user => user._id === userId) 
+            ? "unlike"
+            : "like"}
+          ({likesCount})
         </button>
       </Card>
     </div>
