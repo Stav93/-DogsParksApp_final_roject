@@ -15,12 +15,8 @@ export const parksSlice = createSlice({
     parks: [],
     usersParks: [],
     userLike: false,
-    totalParkLikes: 0,
   },
   reducers: {
-    // updatePark: (state, action) => {
-    //   state.currentPark = action.payload;
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -49,6 +45,7 @@ export const parksSlice = createSlice({
         //add the new park to the array
         state.parks = [...state.parks, data];
         // state.currentPark = action.payload;
+        state.totalParkLikes++;
       })
       .addCase(addLike.rejected, (state, action) => {
         console.error("addLike: ", action.payload);
@@ -67,6 +64,7 @@ export const parksSlice = createSlice({
         currentPark.users.filter((users) => users._id !== currentPark._id);
         //update parks
         state.parks = [...state.parks, currentPark];
+        state.totalParkLikes--;
       })
       .addCase(removeLike.rejected, (state, action) => {
         console.error("removeLike: ", action.payload);

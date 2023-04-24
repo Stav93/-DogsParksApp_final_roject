@@ -3,24 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addLike,
   removeLike,
-  updatePark,
-  updateUserLike,
 } from "../../store/parks-slice";
-import { useUsersContext } from "../../Context/user-context";
 import Card from "../UI/Card/Card";
 import classes from "./Park.module.css";
 
 function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
-  const usersCtx = useUsersContext();
-  const [like, setLike] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
-  const [btnContent, setBtnContent] = useState("");
 
   const userId = useSelector((state) => state.user.user._id);
-  // const userLike = useSelector((state) => state.parks.userLike)
-  const totalLikes = useSelector((state) => state.parks.totalLikes);
-  const user = useSelector((state) => state.user.user);
-  const currentPark = useSelector((state) => state.parks.currentPark);
   const park = {
     _id,
     name,
@@ -55,7 +44,7 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
           {users && users.some(user => user._id === userId) 
             ? "unlike"
             : "like"}
-          ({likesCount})
+          ({users.length})
         </button>
       </Card>
     </div>
