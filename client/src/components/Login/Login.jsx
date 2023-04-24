@@ -121,8 +121,6 @@ function Login() {
   };
 
   useEffect(() => {
-    console.log("user :" + userData)
-    console.log("userName :" + userData.name)
     if (userData.name !== "") {
       navigate(`/profile/${userData.name?.replace(/ /g, "")}`);
     } else {

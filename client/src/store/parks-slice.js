@@ -100,7 +100,6 @@ export const fetchParks = createAsyncThunk("parks/fetchParks", async (id) => {
 export const addLike = createAsyncThunk(
   "parks/addLike",
   async ({ userId, parkId }) => {
-    console.log({ parkId });
     //Todo: move to API folder
     const respone = await fetch(`/api/parks/${parkId}/like`, {
       method: "POST",

@@ -19,3 +19,17 @@
 .like:hover {
   color: #f9a6f1;
 }
+
+.like span {
+  padding: 5px;
+}
+
+@media (max-width: 550px) {
+  .like {
+    width: 30%;
+  }
+
+  /* .like span {
+    padding: 5px;
+  } */
+}

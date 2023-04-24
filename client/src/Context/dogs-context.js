@@ -7,7 +7,7 @@ const DogsContext = React.createContext({});
 
 const DogsContextProvider = ({ children }) => {
   const userId = useSelector((state) => state.user.user._id);
-  console.log(userId);
+  // console.log(userId);
   // const dispatch = useDispatch();
 
   const usersCtx = useUsersContext();
@@ -31,7 +31,7 @@ const DogsContextProvider = ({ children }) => {
     fetch(`/api/users/${userId}/dogs`)
       .then((response) => response.json())
       .then((data) => setDogs(data))
-      .then(console.log(dogs));
+      // .then(console.log(dogs));
   }, [userId]);
 
   //add the dogs to the array, show in the UI and then write to DB

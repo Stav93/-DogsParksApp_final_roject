@@ -5,7 +5,6 @@ import Park from "../Park/Park";
 import classes from "../ParksList/ParksList.module.css";
 
 function ParksList() {
-  // const [parks, setParks] = useState([])
   const [selectedCity, setSelectedCity] = useState("All");
 
   const parks = useSelector((state) => state.parks.parks);
@@ -21,36 +20,6 @@ function ParksList() {
     }
     return city === selectedCity;
   };
-
-  // useEffect(() => {
-  //     fetch(`/api/parks`)
-  //     .then(response => response.json())
-  //     .then(data => setParks(data));
-  // }, []);
-
-  // const updateParks = (parkIndex, user, isLike) => {
-  //   if(isLike) {
-  //     // setParks(parks[parkIndex].users.push(user));
-  //     const parksNew = parks.map((park ,index) => {
-  //       if(index !== parkIndex) return park;
-  //         else {
-  //           park.users.push(user);
-  //           return park;
-  //         }
-  //     })
-  //     setParks(parksNew)
-  //   } else {
-  //     const parksNew = parks.map((park ,index) => {
-  //       if(index !== parkIndex) return park;
-  //       else {
-  //         let usersArr = park.users.filter(u => u._id !== user._id);
-  //         park.users = usersArr;
-  //         return park;
-  //       }
-  //     })
-  //     setParks(parksNew)
-  //   }
-  // }
 
   return (
     <div className={classes.container}>
@@ -75,7 +44,6 @@ function ParksList() {
         {parks.filter(filterByCity).map((park, index) => {
           return (
             <Park key={park._id} index={index} {...park} />
-            // <Park key={park._id} index={index} {...park} OnUpdateParks={updateParks}/>
           );
         })}
       </div>
