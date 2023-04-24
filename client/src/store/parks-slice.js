@@ -11,7 +11,7 @@ const noPark = {
 export const parksSlice = createSlice({
   name: "parks",
   initialState: {
-    park: noPark,
+    currentPark: noPark,
     parks: [],
     usersParks: [],
     userLike: false,
@@ -19,11 +19,8 @@ export const parksSlice = createSlice({
   },
   reducers: {
     updatePark: (state, action) => {
-      state.park = action.payload;
-     },
-    // updateUserLike: (state) => {
-    //   state.userLike = true;
-    // },
+      state.currentPark = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -39,7 +36,6 @@ export const parksSlice = createSlice({
       .addCase(getUserParks.pending, (state, action) => {})
       .addCase(getUserParks.fulfilled, (state, action) => {
         state.usersParks = action.payload;
-        console.log(state.usersParks)
       })
       .addCase(getUserParks.rejected, (state, action) => {
         console.error("userParks: ", action.payload);
@@ -47,8 +43,14 @@ export const parksSlice = createSlice({
       //add like - update park's like(s)
       .addCase(addLike.pending, (state, action) => {})
       .addCase(addLike.fulfilled, (state, action) => {
-        state.park = action.payload;
-        state.userLike = true;
+        const { data, parkId } = action.payload;
+        //remove the park from the parks array
+        state.parks = state.parks.filter(p => p._id !== parkId)
+        console.log("before", state.parks)
+        //add the new park to the array
+        state.parks = [...state.parks, data]
+        console.log("after", state.parks)
+        // state.currentPark = action.payload;
       })
       .addCase(addLike.rejected, (state, action) => {
         console.error("addLike: ", action.payload);
@@ -56,10 +58,12 @@ export const parksSlice = createSlice({
       //remove like - update park's like(s)
       .addCase(removeLike.pending, (state, action) => {})
       .addCase(removeLike.fulfilled, (state, action) => {
-        state.userLike = false;
-        state.park = action.payload.data;
-        state.usersParks = state.usersParks.filter((p) => p._id !== state.park._id);
-        const userId = action.payload.userId;
+        //remove the park from usersParks
+        state.usersParks = state.usersParks.filter(
+          (p) => p._id !== state.currentPark._id
+        );
+        state.currentPark = action.payload;
+        // state.parks = state.parks.filter((p) => p._id !== state.currentPark._id);
       })
       .addCase(removeLike.rejected, (state, action) => {
         console.error("removeLike: ", action.payload);
@@ -96,7 +100,7 @@ export const addLike = createAsyncThunk(
       body: JSON.stringify({ userId }),
     });
     const data = await respone.json();
-    return data;
+    return { data, parkId };
   }
 );
 
@@ -113,7 +117,9 @@ export const removeLike = createAsyncThunk(
       body: JSON.stringify({ userId }),
     });
     const data = await respone.json();
-    return { data, userId };
+    // const currPark = data.find((p) => (p._id = parkId));
+    // console.log(currPark);
+    return data;
   }
 );
 
