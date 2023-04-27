@@ -44,7 +44,7 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
           {users && users.some(user => user._id === userId) 
             ? "unlike"
             : "like"}
-          ({users.length})
+          ({users ? users.length : 0})
         </button>
       </Card>
     </div>
