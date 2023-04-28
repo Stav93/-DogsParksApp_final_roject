@@ -20,7 +20,7 @@ export const parksSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      //get all parks)
+      //get all parks
       .addCase(fetchParks.pending, (state, action) => {})
       .addCase(fetchParks.fulfilled, (state, action) => {
         state.parks = action.payload;
@@ -45,7 +45,7 @@ export const parksSlice = createSlice({
         //add the new park to the array
         state.parks = [...state.parks, data];
         // state.currentPark = action.payload;
-        state.totalParkLikes++;
+        // state.totalParkLikes++;
       })
       .addCase(addLike.rejected, (state, action) => {
         console.error("addLike: ", action.payload);
@@ -64,7 +64,7 @@ export const parksSlice = createSlice({
         currentPark.users.filter((users) => users._id !== currentPark._id);
         //update parks
         state.parks = [...state.parks, currentPark];
-        state.totalParkLikes--;
+        // state.totalParkLikes--;
       })
       .addCase(removeLike.rejected, (state, action) => {
         console.error("removeLike: ", action.payload);
@@ -76,11 +76,13 @@ export const fetchParks = createAsyncThunk("parks/fetchParks", async (id) => {
   //Todo: move to API folder
   if (id !== undefined) {
     //GET user's park(s)
+    console.log("user's parks")
     const respone = await fetch(`/api/users/${id}/parks`);
     const parksData = await respone.json();
     return parksData;
   } else {
     //GET all parks
+    console.log("all parks")
     const respone = await fetch(`/api/parks`);
     const parksData = await respone.json();
     return parksData;

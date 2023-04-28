@@ -9,7 +9,6 @@ function UserParksList() {
   // const parks = useSelector((state) => state.parks.parks)
   const parks = useSelector((state) => state.parks.parks);
   const dispatch = useDispatch();
-  let userParks;
 
   // useEffect(() => {
   //   dispatch(getUserParks(userId))

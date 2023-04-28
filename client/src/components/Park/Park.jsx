@@ -23,6 +23,7 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
 
   const parks = useSelector((state) => state.parks.parks);
   const usersParks = useSelector((state) => state.parks.usersParks);
+  const currentPark = parks.find(park => park._id === parkId)
 
   const dispatch = useDispatch();
   
@@ -37,11 +38,13 @@ function Park({ _id, name, city, street, users, OnUpdateParks, index }) {
   return (
     <div className={classes.park}>
       <Card>
+        {console.log("park ", currentPark)}
+        {console.log("users ", currentPark.users)}
         <label>{name}</label>
         <h3>City: {city}</h3>
         <h3>street: {street}</h3>
         <button className={classes.like} onClick={updateLikesHandler}>
-          {users && users.some(user => user._id === userId) 
+          {currentPark.users.some(user => user._id === userId) 
             ? "unlike"
             : "like"}
           ({users ? users.length : 0})
